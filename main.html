@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Maxime Walder</title>
+        <style>
+
+            @import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+            html {
+                height: 80%;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+            }
+
+            .wrapper {
+                height: 100%;
+                font-family: 'Quicksand', sans-serif;
+                line-height: 1.5;
+                word-spacing: 4px;
+                letter-spacing: 1px;
+            }
+
+            .fixed-bg {
+                display: block;
+                overflow: auto;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                background-color: hsla(120, 20%, 99%, 0.625);
+                margin-top: 0;
+                width: 100%;
+                display: table;
+                color: hsla(120, 9%, 2%, 0.5);
+            }
+            
+            .fixed-bg2 {
+                display: block;
+                overflow: auto;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                background-color:  hsla(120, 9%, 2%, 0.5);
+                margin-top: 0;
+                width: 100%;
+                display: table;
+                color: hsla(120, 20%, 99%, 0.625);
+            }
+            
+            /* first section */
+            
+            #header-main {
+                width: 100%;
+                display: block;
+                overflow: auto;
+                color: hsla(120, 20%, 99%, 0.625);
+                background-color: hsla(120, 9%, 2%, 0.5);
+                text-align: center;
+            }
+
+
+            h1#subscribe, h1#unsubscribe {
+                margin-top: 15%;
+                text-align: center;
+                width: 100%;
+                float: inline-start;
+            }
+
+            .title {
+                text-align: center;
+                width: 100%;
+            }
+
+            input#subscribe {
+                width: 250px;
+                height: 30px;
+            }
+
+            #confirm_sub, #confirm_unsub {
+                margin: auto;
+                width: inherit;
+            }
+
+            #confirm_sub_text, #confirm_unsub_text {
+                background-color: hsla(120, 20%, 99%, 0.2);
+                cursor: pointer;
+                outline-style: solid;
+                outline-style: round;
+                display: inline-block;
+                padding: 0.5% 2%;
+            }
+
+            .header {
+                float: left;
+                margin-left: 5%;
+                cursor: pointer;
+                color: #0f0f0a;
+            }
+
+            .writeFixe {
+                padding: 30px 50px 70px 70px;
+                text-align: center;
+            }
+
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="wrapper"> <!-- wrapper div starts -->
+  
+            <div class="fixed-bg">
+                <div id="header-main" style="position: center;">
+                    <div class="header">
+                        <a href="#subscribe" style="color: hsla(120, 20%, 99%, 0.625);">
+                            <p>Research</p>
+                        </a>   
+                    </div>
+                    <div class="header">
+                        <a href="#something_else" style="color: hsla(120, 20%, 99%, 0.625);">
+                            <p>Teaching</p>
+                        </a>   
+                    </div>
+                    <div class="header">
+                        <a href="#unsubscribe" style="color: hsla(120, 20%, 99%, 0.625);">
+                            <p>Programming</p>
+                        </a>   
+                    </div>
+                    <div class="header">
+                        <a href="#Contacts" style="color: hsla(120, 20%, 99%, 0.625);">
+                            <p>Contact</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="writeFixe">
+                    <h1>Maxime Walder</h1>
+                </div>
+                <h3 class="writeFixe">
+
+                    I am a political scientist interested in the dynamic nature political representation and democracy with a strong focus on data science and computational methods.
+                     
+                </h3>
+             
+            </div>
+            
+            <div class="fixed-bg2">
+                <h1 class="writeFixe">Research</h1>
+                <h3 class="writeFixe">
+                    Put some text here
+                </h3>
+            </div>
+            
+            <div class="fixed-bg" id="subscribe_box">
+                <h1 class="writeFixe">Teaching</h1>
+                <h3 class="writeFixe">
+                    Explain a bit here
+                </h3>
+                
+            </div>
+            <div class="fixed-bg2">
+                <h1 class="writeFixe">Programming</h1>
+                <h3>Some other content</h3>
+            </div>
+            
+            <div class="fixed-bg" id="unsubscribe_box">
+                <h1 class="writeFixe">Contact</h1>
+            </div>
+            
+          </div> <!-- wrapper div ends-->
+          <script src="error message.js"></script>
+    </body>
+</html>
