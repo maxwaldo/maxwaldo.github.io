@@ -33,11 +33,11 @@
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center center;
-                background-color: hsla(120, 20%, 99%, 0.625);
-                margin-top: 0;
+                background-color: hsl(0, 0%, 90%);
+                margin: 0;
                 width: 100%;
                 display: table;
-                color: hsla(120, 9%, 2%, 0.5);
+                color: hsla(0, 0%, 15%, 0.9);
             }
             
             .fixed-bg2 {
@@ -47,27 +47,42 @@
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center center;
-                background-color:  hsla(120, 9%, 2%, 0.5);
-                margin-top: 0;
+                margin: 0;
                 width: 100%;
                 display: table;
-                color: hsla(120, 20%, 99%, 0.625);
+                color: hsl(0, 0%, 90%);
+
+                background-color: hsla(0, 0%, 15%, 0.9);
             }
             
+            .fixed-bg3 {
+                display: block;
+                overflow: auto;
+                background-attachment: fixed;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                margin: 0;
+                width: 100%;
+                display: table;
+                background-color: hsl(0, 0%, 90%);
+                color: hsla(0, 0%, 15%, 0.9);
+            }
+
             /* first section */
             
             #header-main {
                 width: 100%;
                 display: block;
                 overflow: auto;
-                color: hsla(120, 20%, 99%, 0.625);
-                background-color: hsla(120, 9%, 2%, 0.5);
+                color: hsl(0, 0%, 90%);
+                background-color: hsla(0, 0%, 15%, 0.9);
                 text-align: center;
             }
 
 
             h1#subscribe, h1#unsubscribe {
-                margin-top: 15%;
+                margin-top: 0%;
                 text-align: center;
                 width: 100%;
                 float: inline-start;
@@ -89,7 +104,7 @@
             }
 
             #confirm_sub_text, #confirm_unsub_text {
-                background-color: hsla(120, 20%, 99%, 0.2);
+                background-color: hsla(0, 0%, 15%, 0.9);
                 cursor: pointer;
                 outline-style: solid;
                 outline-style: round;
@@ -105,15 +120,89 @@
             }
 
             .writeFixe {
-                padding: 30px 50px 70px 70px;
+                margin: 0%;
+                text-align: left;
+                background-color: hsl(0, 0%, 90%);
+                height: 100%;
+                color: hsla(0, 0%, 15%, 0.9);
+            }
+
+
+
+            .writeFixe1 {
+                border-radius: 25%;
+                
+                margin: 5% 25% 5% 5%;
+                text-align: left;
+                color: hsl(0, 0%, 90%);
+                background-color: hsla(0, 0%, 15%, 0.9);
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .writeFixe2 {
+                border-radius: 25%;
+                margin: 5% 5% 5% 25%;
+                text-align: right;
+                background-color: hsl(0, 0%, 90%);
+                color: hsla(0, 0%, 15%, 0.9);
+            }
+
+            .writeFixe3 {
+                border-radius: 25%;
+                margin: 5% 25% 5% 5%;
+                text-align: left;
+                color: hsl(0, 0%, 90%);
+                background-color: hsla(0, 0%, 15%, 0.9);
+            }
+
+            .writeFixe4 {
+                margin: 2% 2% 2% 2%;
                 text-align: center;
+                color: hsl(0, 0%, 90%);
+                background-color: hsla(0, 0%, 15%, 0);
+            }
+
+            .writeFixe1a {
+                padding: 5% 5% 5% 5%;
+                text-align: left;
+                height: 100%;
+                width: 50%;
+                
+            }
+
+            .writeFixe1b {
+                padding: 25% 5% 5% 5%;
+                text-align: left;
+                display: inline-block;
+                width: 50%;
+            }
+
+            .writeFixe2a {
+                padding: 2% 5% 2% 15%;
+                text-align: right;
+                width: 80%;
+            }
+
+            .writeFixe3a {
+                padding: 2% 15% 2% 5%;
+                text-align: left;
+                width: 80%;
             }
 
             img {  
                 opacity: 0.8;
-                max-width: 30%;  
+                max-width: 100%;  
                 height: auto;  
             }
+
+            img.imgprof {
+                width: 100%;
+                border-radius: 25%;
+                height: auto;
+            }
+
             img.contact1 {
                 max-width: 80px;
                 height: auto;
@@ -145,83 +234,106 @@
             <div class="fixed-bg">
                 <div id="header-main" style="position: center;">
                     <div class="header">
-                        <a href="#Research" style="color: hsla(120, 20%, 99%, 0.625);">
+                        <a href="#Research" style="color: hsl(0, 0%, 99%);">
                             <p>Research</p>
                         </a>   
                     </div>
                     <div class="header">
-                        <a href="#Teaching" style="color: hsla(120, 20%, 99%, 0.625);">
+                        <a href="#Teaching" style="color: hsl(0, 0%, 99%);">
                             <p>Teaching</p>
                         </a>   
                     </div>
                     <div class="header">
-                        <a href="#Programming" style="color: hsla(120, 20%, 99%, 0.625);">
+                        <a href="#Programming" style="color: hsl(0, 0%, 99%);">
                             <p>Programming</p>
                         </a>   
                     </div>
                     <div class="header">
-                        <a href="#Contact" style="color: hsla(120, 20%, 99%, 0.625);">
+                        <a href="#Contact" style="color: hsl(0, 0%, 99%);">
                             <p>Contact</p>
                         </a>
                     </div>
                 </div>
-                <div class="writeFixe">
-                    <img src="IMG_4963.PNG" alt="Me">
-                    <h1>Maxime Walder</h1>
+                <div class="writeFixe1">
+                    <div class="writeFixe1a">
+                       
+                        <img src="IMG_4963.PNG" alt="Me" class="imgprof">
+                        <h1 style="text-align: center;"> Dr. Maxime Walder</h1>
+                    </div>
+                    <div  class="writeFixe1b">
+                        <p style="bottom: 0px;">
+                            I am a political scientist interested in the dynamic nature political representation and democracy with a strong focus on data science and computational methods.    
+                        </p>
+                    </div>
                     
                 </div>
-                <h3 class="writeFixe">
-                    I am a political scientist interested in the dynamic nature political representation and democracy with a strong focus on data science and computational methods.    
-                </h3>
+                
              
             </div>
             
             <div class="fixed-bg2" id="Research">
-                <h1 class="writeFixe">Research</h1>
+                <div class="writeFixe2">
+                    <h1 class="writeFixe2a" style="text-align: center;">Research</h1>
                 
-                <h3 class="writeFixe">
-                    <br><u>University of Geneva, Under the Direction of Prof. Nathalie Giger:</u></br> Online News Exposure: A Threat to Democracy? How Digital Transformation Affects Opinion Formation, Political Polarization and Trust.
-                </h3>
-                <h3 class="writeFixe">
-                    <br><u>University of Basel, Under the Direction of Prof. Stefanie Bailer:</u></br> Visual Politician - Inclusiveness and Exclusiveness in Visual Political Communication.
-                </h3>
-                <h3 class="writeFixe">
-                    <br><u>Together with Prof Oliver Strijbis:</u></br> SPS Garage, the Swiss Political Survey Garage. More infos on <a href = "https://www.spsgarage.ch">www.spsgarage.ch</a>
-                </h3>
+                    <h3 class="writeFixe2a">
+                        <br><u>University of Geneva, Under the Direction of Prof. Nathalie Giger:</u></br> Online News Exposure: A Threat to Democracy? How Digital Transformation Affects Opinion Formation, Political Polarization and Trust.
+                    </h3>
+                    <h3 class="writeFixe2a">
+                        <br><u>University of Basel, Under the Direction of Prof. Stefanie Bailer:</u></br> Visual Politician - Inclusiveness and Exclusiveness in Visual Political Communication.
+                    </h3>
+                    <h3 class="writeFixe2a">
+                        <br><u>Together with Prof Oliver Strijbis:</u></br> SPS Garage, the Swiss Political Survey Garage. More infos on <a href = "https://www.spsgarage.ch">www.spsgarage.ch</a>
+                    </h3>
+                    
+                    <h3 class="writeFixe2a">
+                        <br><u>Ph.D. Thesis:</u></br> Parties and Voters in Interaction: Lessons from Direct Democracy.
+                    </h3>
+                    <h3 class="writeFixe2a"></h3>
+                    <h3 class="writeFixe2a"></h3>
+                </div>
                 
-                <h3 class="writeFixe">
-                    <br><u>Ph.D. Thesis:</u></br> Parties and Voters in Interaction: Lessons from Direct Democracy.
-                </h3>
             </div>
             
-            <div class="fixed-bg" id="subscribe_box">
-                <h1 class="writeFixe" id="Teaching">Teaching</h1>
-                <h3 class="writeFixe">
+            <div class="fixed-bg3" id="subscribe_box">
+                <div class="writeFixe3">
+                    <h1 class="writeFixe3a" id="Teaching" style="text-align: center;">Teaching</h1>
+                    <h3 class="writeFixe3a">
                     <br><u>Fall 2020 & Fall 2018:</u></br>Political Campaign in Elections and Direct Democracy. Bachelor Option class in the University of Zurich.
-                </h3>
+                    </h3>
+                    <h3 class="writeFixe3a"></h3>
+                </div>
+                
                 
             </div>
             <div class="fixed-bg2">
-                <h1 class="writeFixe" id="Programming">Programming</h1>
-                <h3 class="writeFixe">
-                    <br>Mostly interested in Computational Social Science.</br>
+                <div class="writeFixe2">
+                    <h1 class="writeFixe2a" id="Programming" style="text-align: center;">Programming</h1>
+                    <h3 class="writeFixe2a">
+                        <br>Mostly interested in Computational Social Science.</br>
 
-                    <br>Various levels of knowledge in R, Python, Javascript. Also uses HTML, CSS and NodeJs for website development when necessary</br>
+                        <br>Various levels of knowledge in R, Python, Javascript. Also uses HTML, CSS and NodeJs for website development when necessary</br>
 
-                    <br>To know more about my project, visit my <a href="https://github.com/maxwaldo">Github Page</a>. </br>
-                </h3>
+                        <br>To know more about my project, visit my <a href="https://github.com/maxwaldo">Github Page</a>. </br>
+                    </h3>
+                    <h3 class="writeFixe2a"></h3>
+                    <h3 class="writeFixe2a"></h3>
+                </div>
+                
             </div>
             
-            <div class="fixed-bg" id="unsubscribe_box">
-                <h1 class="writeFixe" id="Contact">Contact</h1>
-                <h3 class="writeFixe">
-                    <a href="https://github.com/maxwaldo"><img src="githubicon.png" alt="" class="contact1"></a>
-                    <a href="https://twitter.com/WalderMaxime"><img src="twittericon.png" alt="" class="contact2"></a>
-                    <a href="mailto: maxime.walder@unige.ch"><img src="mailicon.png" alt="" class="contact3"></a>
-                </h3>
-                <h3 class="writeFixe">
+            <div class="fixed-bg2" id="unsubscribe_box">
+                <div class="writeFixe4">
+                    <h1 id="Contact">Contact</h1>
+                    <h3 class="writeFixe3a">
+                        <a href="https://github.com/maxwaldo"><img src="githubicon.png" alt="" class="contact1"></a>
+                        <a href="https://twitter.com/WalderMaxime"><img src="twittericon.png" alt="" class="contact2"></a>
+                        <a href="mailto: maxime.walder@unige.ch"><img src="mailicon.png" alt="" class="contact3"></a>
+                    </h3>
+                    <h3 class="writeFixe3a">
 
-                </h3>
+                    </h3>
+                </div>
+                
             </div>
             
           </div> <!-- wrapper div ends-->
