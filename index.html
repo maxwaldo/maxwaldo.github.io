@@ -1,360 +1,262 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Maxime Walder</title>
-        <style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maxime Walder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --fg: #111827;
+      --primary: #2563eb;
+      --secondary: #4b5563;
+      --card-bg: #ffffff;
+    }
+    body.dark {
+      --bg: #111827;
+      --fg: #f9fafb;
+      --primary: #60a5fa;
+      --secondary: #9ca3af;
+      --card-bg: #1f2937;
+    }
 
-            @import url('https://fonts.googleapis.com/css?family=Quicksand');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; } /* ✅ Smooth scrolling */
 
-            html {
-                height: 80%;
-                margin: 0;
-                padding: 0;
-            }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
 
-            body {
-                margin: 0;
-                padding: 0;
-                height: 100%;
-            }
+    header {
+      background: var(--card-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--fg);
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--secondary); }
 
-            .wrapper {
-                height: 100%;
-                font-family: 'Quicksand', sans-serif;
-                line-height: 1.5;
-                word-spacing: 4px;
-                letter-spacing: 1px;
-            }
+    .toggle-btn {
+      margin-left: 2rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .toggle-btn:hover { background: #1d4ed8; }
 
-            .fixed-bg {
-                display: block;
-                overflow: auto;
-                background-attachment: fixed;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-position: center center;
-                background-color: hsl(0, 0%, 90%);
-                margin: 0;
-                width: 100%;
-                display: table;
-                color: hsla(0, 0%, 15%, 0.9);
-            }
-            
-            .fixed-bg2 {
-                display: block;
-                overflow: auto;
-                background-attachment: fixed;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-position: center center;
-                margin: 0;
-                width: 100%;
-                display: table;
-                color: hsl(0, 0%, 90%);
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-                background-color: hsla(0, 0%, 15%, 0.9);
-            }
-            
-            .fixed-bg3 {
-                display: block;
-                overflow: auto;
-                background-attachment: fixed;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-position: center center;
-                margin: 0;
-                width: 100%;
-                display: table;
-                background-color: hsl(0, 0%, 90%);
-                color: hsla(0, 0%, 15%, 0.9);
-            }
+    section h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    section h3 {
+      margin: 1rem 0;
+      font-weight: 500;
+      color: var(--secondary);
+    }
 
-            /* first section */
-            
-            #header-main {
-                width: 100%;
-                display: block;
-                overflow: auto;
-                color: hsl(0, 0%, 90%);
-                background-color: hsla(0, 0%, 15%, 0.9);
-                text-align: center;
-            }
+    section p {
+      margin: 1rem 0;
+      font-size: 1rem;
+      font-weight: 200;
+      color: var(--secondary);
+    }
 
+    /* ✅ Hero section with parallax */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      background-image: url('FIOU8471_websize.jpg'); /* you can replace with a banner image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* creates parallax effect */
+      color: var(--fg);
+    }
+    .hero-overlay {
+      background: rgba(255,255,255,0.6); /* light overlay for readability */
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 700px;
+    }
+    body.dark .hero-overlay {
+      background: rgba(0,0,0,0.6);
+    }
+    .hero h1 { margin-bottom: 1rem; }
+    .hero p { max-width: 600px; color: var(--fg); }
 
-            h1#subscribe, h1#unsubscribe {
-                margin-top: 0%;
-                text-align: center;
-                width: 100%;
-                float: inline-start;
-            }
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .contact-icons img {
+      width: 50px;
+      transition: transform 0.2s;
+    }
+    .contact-icons img:hover {
+      transform: scale(1.1);
+    }
 
-            .title {
-                text-align: center;
-                width: 100%;
-            }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-top: 1px solid #e5e7eb;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dr. Maxime Walder</h1>
+    <nav>
+      <a href="#Publications">Publications</a>
+      <a href="#Research">Research</a>
+      <a href="#Teaching">Teaching</a>
+      <a href="#Programming">Programming</a>
+      <a href="#Contact">Contact</a>
+      <a href="/listpublication.pdf">Publication list</a>
+      <a href="/cv.pdf">CV</a>
+      <button class="toggle-btn" id="toggle-theme">🌙</button>
+    </nav>
+  </header>
 
-            input#subscribe {
-                width: 250px;
-                height: 30px;
-            }
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1>Dr. Maxime Walder</h1>
+      <p>
+        I am a political scientist interested in the dynamic nature of political representation 
+        and democracy with a strong focus on data science and computational methods.
+      </p>
+    </div>
+  </section>
 
-            #confirm_sub, #confirm_unsub {
-                margin: auto;
-                width: inherit;
-            }
+  <section id="Publications">
+    <h1>Academic publications</h1>
+    <h3>Walder, M.; Bailer, S. and Giger, N.  (2025). Does it matter what you do in parliament? On the effects of politicians’ behavior on vote choice. <i>Accepted for publication in Legislative Studies Quarterly.</i></h3>
+    <h3>Claessen, C.; Walder, M. and Alberto, A. (2025) Picture-perfect: On the relationship between party leader visibility and voting during party leader elections. <i>Accepted for publication in Visual Communication Quaterly</i></h3>
+    <h3>Sciarini, P. and Walder, M. (2025). Unequal Voices: The Educational Gap of Voting Choices in the Swiss Direct Democracy. <i>Accepted for publication in the Swiss Political Science Review.</i></h3>
+    <h3>Walder, M. (2025) Latent Ideological Positions of Swiss Parties and Subsets of the Population. <i>Swiss Political Science Review.</i> <a href="https://doi.org/10.1111/spsr.70003">doi:10.1111/spsr.70003</a></h3>
+    <h3>Walder, M., Fivaz, J., Schwarz, D., and Giger, N. (2024). Explaining the (non-) use of voting advice applications. <i>Digital Government: Research and Practice, 5(3)</i>, 1-29. doi: <a href="https://doi.org/10.3389/fpos.2024.1425406">doi:10.3389/fpos.2024.1425406</a></h3>
+    <h3>Walder, M. (2024) On the same space? Measuring the ideology of voters and political elites. <i>Frontiers in Political Science</i> <a href="https://doi.org/10.3389/fpos.2024.1425406">doi:10.3389/fpos.2024.1425406</a></h3>
+    <h3>Walder, M., and Strijbis, O. (2023). The partisan heuristic and the voters’ knowledge: The essential role of the information environment. <i>Electoral Studies, 84, 1026-41.</i> <a href="https://doi.org/10.1016/j.electstud.2023.102641">doi:10.1016/j.electstud.2023.102641</a></h3>
+    <h3>Walder, M., and Strijbis, O. (2022). Negative Party Identification and the Use of Party Cues in the Direct Democratic Context.  <i>Politics and Governance, 10</i> (4), 325–335. <a href="https://doi.org/10.17645/pag.v10i4.5702">doi:10.17645/pag.v10i4.5702</a></h3>
+    <h3>Walder, M. (2021) Parties and Voters in Interaction: Lessons from Direct Democracy. <i>Ph.D. Dissertation</i></h3>
+    <h3>The complete publication list can be found <a href="/listpublication.pdf">here</a>.</h3>
+  </section>
 
-            #confirm_sub_text, #confirm_unsub_text {
-                background-color: hsla(0, 0%, 15%, 0.9);
-                cursor: pointer;
-                outline-style: solid;
-                outline-style: round;
-                display: inline-block;
-                padding: 0.5% 2%;
-            }
+  <section id="Research">
+    <h1>Research</h1>
+    <h3><u>Senior Researcher</u> (Since 2023) </h3>
+    <h3>Online News Exposure: A Threat to Democracy? How Digital Transformation Affects Opinion Formation, Political Polarization and Trust.</h3>
+    <p>University of Geneva & University of Basel <br>
+      Under the Direction of Prof. Denise Traber and Prof. Nathalie Giger:</p>
+    
+    <h3><u>Post-Doctoral Researcher</u> (2021-2025)</h3>
+    <h3>Online News Exposure: A Threat to Democracy? How Digital Transformation Affects Opinion Formation, Political Polarization and Trust. National Research Program on Digital Transformation (NRP77)</h3>
+    <p>University of Geneva <br> 
+      Under the Direction of Prof. Nathalie Giger</p>
 
-            .header {
-                float: left;
-                margin-left: 5%;
-                cursor: pointer;
-                color: #0f0f0a;
-            }
+    <h3><u>Post-Doctoral Researcher</u> (2021-2022)
+    <h3>Visual Politician - Inclusiveness and Exclusiveness in Visual Political Communication.</h3>
+    <p>University of Basel <br> 
+      Under the Direction of Prof. Stefanie Bailer</p>
+    
+    <h3><u>Doctoral Candidate</u> (2017-2021)</h3>
+    <h3>The Effect of Campaign Events on Direct Democratic Choices; Evidence from Prediction Market.</h3>
+    <p>University of Zurich <br> Under the Direction of Prof. Oliver Strijbis</p>
+  </section>
 
-            .writeFixe {
-                margin: 0%;
-                text-align: left;
-                background-color: hsl(0, 0%, 90%);
-                height: 100%;
-                color: hsla(0, 0%, 15%, 0.9);
-            }
+  <section id="Teaching">
+    <h1>Teaching</h1>
+    <h3><u>Fall 2020 & Fall 2018:</u> Political Campaign in Elections and Direct Democracy. Bachelor Option class in the University of Zurich.</h3>
+    <h3><u>Fall 2022, Fall 2023, Fall 2024:</u> Méthodes Quantitatives. Bachelor Mandatory class in the University of Geneva.</h3>
+  </section>
 
+  <section id="Programming">
+    <h1>Programming</h1>
+    <h3>Walder, M. (2025) RSwissPos: R package to get data on Swiss direct democratic ballots. Software access at <a href="https://github.com/maxwaldo/RSwissPos">https://github.com/maxwaldo/RSwissPos</a></h3>
+    <h3>Walder, M. (2025) Measuring latent ideological position of subsets of the Swiss population with RSwissPos. Access to the Vignette at <a href="https://maxwaldo.github.io/Latent_pos_subset_pop.html">https://maxwaldo.github.io/Latent_pos_subset_pop.html</a></h3>
+    <h3>Various levels of knowledge in R, Python, Javascript. Also uses HTML, CSS and NodeJs for website development. To know more about my projects, visit my <a href="https://github.com/maxwaldo">Github Page</a>.</h3>
+  </section>
 
+  <section id="Contact">
+    <h1>Contact</h1>
+    <div class="contact-icons">
+      <a href="https://github.com/maxwaldo"><img src="githubicon.png" alt="Github"></a>
+      <a href="mailto:maxime.walder@unige.ch"><img src="mailicon.png" alt="Email"></a>
+    </div>
+  </section>
 
-            .writeFixe1 {
-                border-radius: 25%;
-                
-                margin: 5% 25% 5% 5%;
-                text-align: left;
-                color: hsl(0, 0%, 90%);
-                background-color: hsla(0, 0%, 15%, 0.9);
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-            }
+  <footer>
+    <p>© 2025 Maxime Walder. Built with ❤️ and clean code.</p>
+  </footer>
 
-            .writeFixe2 {
-                border-radius: 25%;
-                margin: 5% 5% 5% 25%;
-                text-align: right;
-                background-color: hsl(0, 0%, 90%);
-                color: hsla(0, 0%, 15%, 0.9);
-            }
+  <script>
+    // Dark mode toggle
+    const btn = document.getElementById('toggle-theme');
+    btn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    });
 
-            .writeFixe3 {
-                border-radius: 25%;
-                margin: 5% 25% 5% 5%;
-                text-align: left;
-                color: hsl(0, 0%, 90%);
-                background-color: hsla(0, 0%, 15%, 0.9);
-            }
+    // Reveal sections on scroll
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
 
-            .writeFixe4 {
-                margin: 2% 2% 2% 2%;
-                text-align: center;
-                color: hsl(0, 0%, 90%);
-                background-color: hsla(0, 0%, 15%, 0);
-            }
-
-            .writeFixe1a {
-                padding: 5% 5% 5% 5%;
-                text-align: left;
-                height: 100%;
-                width: 50%;
-                
-            }
-
-            .writeFixe1b {
-                padding: 25% 5% 5% 5%;
-                text-align: left;
-                display: inline-block;
-                width: 50%;
-            }
-
-            .writeFixe2a {
-                padding: 2% 5% 2% 15%;
-                text-align: right;
-                width: 80%;
-            }
-
-            .writeFixe3a {
-                padding: 2% 15% 2% 5%;
-                text-align: left;
-                width: 80%;
-            }
-
-            img {  
-                opacity: 0.8;
-                max-width: 100%;  
-                height: auto;  
-            }
-
-            img.imgprof {
-                width: 100%;
-                border-radius: 25%;
-                height: auto;
-            }
-
-            img.contact1 {
-                max-width: 80px;
-                height: auto;
-                position: absolute;
-                left: 25%;
-            }
-
-            img.contact2 {
-                max-width: 80px;
-                height: auto;
-                position: absolute;
-                left: 50%;
-            }
-
-            img.contact3 {
-                max-width: 80px;
-                height: auto;
-                position: absolute;
-                left: 75%;
-            }
-
-
-        </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div class="wrapper"> <!-- wrapper div starts -->
-  
-            <div class="fixed-bg">
-                <div id="header-main" style="position: center;">
-                    <div class="header">
-                        <a href="#Research" style="color: hsl(0, 0%, 99%);">
-                            <p>Research</p>
-                        </a>   
-                    </div>
-                    <div class="header">
-                        <a href="#Teaching" style="color: hsl(0, 0%, 99%);">
-                            <p>Teaching</p>
-                        </a>   
-                    </div>
-                    <div class="header">
-                        <a href="#Programming" style="color: hsl(0, 0%, 99%);">
-                            <p>Programming</p>
-                        </a>   
-                    </div>
-                    <div class="header">
-                        <a href="#Contact" style="color: hsl(0, 0%, 99%);">
-                            <p>Contact</p>
-                        </a>
-                    </div>
-                    <div class="header">
-                        <a href="/listpublication.pdf" style="color: hsl(0, 0%, 99%);">
-                            <p>Publication list</p>
-                        </a>
-                    </div>
-                    <div class="header">
-                        <a href="/cv.pdf" style="color: hsl(0, 0%, 99%);">
-                            <p>CV</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="writeFixe1">
-                    <div class="writeFixe1a">
-                       
-                        <img src="IMG_4963.PNG" alt="Me" class="imgprof">
-                        <h1 style="text-align: center;"> Dr. Maxime Walder</h1>
-                    </div>
-                    <div  class="writeFixe1b">
-                        <p style="bottom: 0px;">
-                            I am a political scientist interested in the dynamic nature political representation and democracy with a strong focus on data science and computational methods.    
-                        </p>
-                    </div>
-                    
-                </div>
-                
-             
-            </div>
-            
-            <div class="fixed-bg2" id="Research">
-                <div class="writeFixe2">
-                    <h1 class="writeFixe2a" style="text-align: center;">Research</h1>
-                
-                    <h3 class="writeFixe2a">
-                        <br><u>University of Geneva, Under the Direction of Prof. Nathalie Giger:</u></br> Online News Exposure: A Threat to Democracy? How Digital Transformation Affects Opinion Formation, Political Polarization and Trust.
-                    </h3>
-                    <h3 class="writeFixe2a">
-                        <br><u>University of Basel, Under the Direction of Prof. Stefanie Bailer:</u></br> Visual Politician - Inclusiveness and Exclusiveness in Visual Political Communication.
-                    </h3>
-                    <h3 class="writeFixe2a">
-                        <br><u>Together with Prof. Oliver Strijbis:</u></br> SPS Garage, the Swiss Political Survey Garage. More infos on <a href = "https://www.spsgarage.ch">www.spsgarage.ch</a>
-                    </h3>
-                    
-                    <h3 class="writeFixe2a">
-                        <br><u>Ph.D. Thesis:</u></br> Parties and Voters in Interaction: Lessons from Direct Democracy.
-                    </h3>
-
-                    <h3 class="writeFixe2a">
-                        The complete publication list can be found <a href="/listpublication.pdf">here</a> 
-                    </h3>
-                    <h3 class="writeFixe2a"></h3>
-                    <h3 class="writeFixe2a"></h3>
-                </div>
-                
-            </div>
-            
-            <div class="fixed-bg3" id="subscribe_box">
-                <div class="writeFixe3">
-                    <h1 class="writeFixe3a" id="Teaching" style="text-align: center;">Teaching</h1>
-                    <h3 class="writeFixe3a">
-                    <br><u>Fall 2020 & Fall 2018:</u></br>Political Campaign in Elections and Direct Democracy. Bachelor Option class in the University of Zurich.
-                    </h3>
-                    <h3 class="writeFixe3a"></h3>
-                    <h3 class="writeFixe3a">
-                    <br><u>Fall 2022:</u></br>Méthodes Quantitatives. Bachelor Mandatory class in the University of Geneva.
-                    </h3>
-                    <h3 class="writeFixe3a"></h3>
-                </div>
-                
-                
-            </div>
-            <div class="fixed-bg2">
-                <div class="writeFixe2">
-                    <h1 class="writeFixe2a" id="Programming" style="text-align: center;">Programming</h1>
-                    <h3 class="writeFixe2a">
-                        <br>Mostly interested in Computational Social Science.</br>
-
-                        <br>Various levels of knowledge in R, Python, Javascript. Also uses HTML, CSS and NodeJs for website development when necessary</br>
-
-                        <br>To know more about my project, visit my <a href="https://github.com/maxwaldo">Github Page</a>. </br>
-                    </h3>
-                    <h3 class="writeFixe2a"></h3>
-                    <h3 class="writeFixe2a"></h3>
-                </div>
-                
-            </div>
-            
-            <div class="fixed-bg2" id="unsubscribe_box">
-                <div class="writeFixe4">
-                    <h1 id="Contact">Contact</h1>
-                    <h3 class="writeFixe3a">
-                        <a href="https://github.com/maxwaldo"><img src="githubicon.png" alt="" class="contact1"></a>
-                        <a href="https://twitter.com/WalderMaxime"><img src="twittericon.png" alt="" class="contact2"></a>
-                        <a href="mailto: maxime.walder@unige.ch"><img src="mailicon.png" alt="" class="contact3"></a>
-                    </h3>
-                    <h3 class="writeFixe3a">
-
-                    </h3>
-                </div>
-                
-            </div>
-            
-          </div> <!-- wrapper div ends-->
-          <script src="error message.js"></script>
-    </body>
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
 </html>
