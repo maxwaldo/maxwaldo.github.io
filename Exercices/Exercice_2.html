@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxime Walder">
+<meta name="dcterms.date" content="2026-02-09">
+
+<title>Exercice 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Exercice_2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Exercice_2_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Exercice_2_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Exercice_2_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Exercice_2_files/libs/quarto-html/popper.min.js"></script>
+<script src="Exercice_2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Exercice_2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Exercice_2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Exercice_2_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Exercice_2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Exercice_2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Exercice_2_files/libs/bootstrap/bootstrap-0f9f7490fdc41efd1abaa8c23df3f716.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#question-1-fréquences-croisées" id="toc-question-1-fréquences-croisées" class="nav-link active" data-scroll-target="#question-1-fréquences-croisées"><span class="header-section-number">1</span> Question 1 –&gt; fréquences croisées</a></li>
+  <li><a href="#question-2-proportions-croisées" id="toc-question-2-proportions-croisées" class="nav-link" data-scroll-target="#question-2-proportions-croisées"><span class="header-section-number">2</span> Question 2 –&gt; proportions croisées</a></li>
+  <li><a href="#question-3-chi-carré" id="toc-question-3-chi-carré" class="nav-link" data-scroll-target="#question-3-chi-carré"><span class="header-section-number">3</span> Question 3 –&gt; Chi carré</a></li>
+  <li><a href="#question-4-comparaison-de-moyenne" id="toc-question-4-comparaison-de-moyenne" class="nav-link" data-scroll-target="#question-4-comparaison-de-moyenne"><span class="header-section-number">4</span> Question 4 –&gt; Comparaison de moyenne</a></li>
+  <li><a href="#question-5-corrélation" id="toc-question-5-corrélation" class="nav-link" data-scroll-target="#question-5-corrélation"><span class="header-section-number">5</span> Question 5 –&gt; Corrélation</a></li>
+  <li><a href="#question-6-anova" id="toc-question-6-anova" class="nav-link" data-scroll-target="#question-6-anova"><span class="header-section-number">6</span> Question 6 –&gt; ANOVA</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercice 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maxime Walder </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 9, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="question-1-fréquences-croisées" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="question-1-fréquences-croisées"><span class="header-section-number">1</span> Question 1 –&gt; fréquences croisées</h2>
+<p>1.1 Dans la base de données STAR combien d’individus ont un score supérieur à 600 en maths (variable math) et en lecture (variable reading) ?</p>
+<p>1.2 Dans la base de données BES, combien d’individus ont en dessous de 30 ans (variable age) et une formation suppérieur (valeur 4 ou 5 de la variable education) ?</p>
+<p>1.3 Dans la base de données UK_districts, combien de district ont un un taux de personnes avec une formation supérieur suppérieur à 22.5% (variable high_education) et on soutenu le Brexit à moins de 50% (variable leave)?</p>
+<p>1.4 Dans la base de données countries, combien de pays ont un niveau moyen d’émission de lumière pendant la nuit entre 1992 et 1993 en dessous de 10 (variable prior_light) et un niveau moyen d’émission de lumière pendant la nuit entre 2005 et 2006 (variable light) suppérieur à 10 ?</p>
+<p>1.5 Dans la base de données UA_precincts, combien de districts ont soutenu le parti pro russe en 2012 à plus de 25% (variable prior_pro_russian) et ont soutenu le parti pro russe en 2014 à moins de 10% (variable pro_russian) ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Importer la base de données correspondante:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>STAR <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/STAR.csv"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BES <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/BES.csv"</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UK_districts.csv"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/countries.csv"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>UA_survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UA_survey.csv"</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>UA_precincts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UA_precincts.csv"</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 1.1</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>STAR <span class="ot">&lt;-</span> STAR <span class="sc">%&gt;%</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">more600 =</span> <span class="fu">ifelse</span>(math<span class="sc">&gt;</span><span class="dv">600</span> <span class="sc">&amp;</span> reading<span class="sc">&gt;</span><span class="dv">600</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(STAR<span class="sc">$</span>more600, <span class="at">na.rm=</span>T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 875</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 1.2</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>BES <span class="ot">&lt;-</span> BES <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age30higheduc =</span> <span class="fu">ifelse</span>(age<span class="sc">&lt;</span><span class="dv">30</span> <span class="sc">&amp;</span> education<span class="sc">&gt;</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(BES<span class="sc">$</span>age30higheduc, <span class="at">na.rm=</span>T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2180</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 1.3</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> UK_districts <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">highEducNoBx =</span> <span class="fu">ifelse</span>(high_education<span class="sc">&gt;</span><span class="fl">22.5</span> <span class="sc">&amp;</span> leave<span class="sc">&lt;</span><span class="dv">50</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(UK_districts<span class="sc">$</span>highEducNoBx, <span class="at">na.rm =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 104</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 1.4</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> countries <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lightUnderAbove10 =</span> <span class="fu">ifelse</span>(prior_light<span class="sc">&lt;</span><span class="dv">10</span> <span class="sc">&amp;</span> light<span class="sc">&gt;</span><span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(countries<span class="sc">$</span>lightUnderAbove10, <span class="at">na.rm =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 1.5</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>UA_precincts <span class="ot">&lt;-</span> UA_precincts <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prio25new10 =</span> <span class="fu">ifelse</span>(prior_pro_russian<span class="sc">&gt;</span><span class="dv">25</span> <span class="sc">&amp;</span> pro_russian<span class="sc">&lt;</span><span class="dv">10</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(UA_precincts<span class="sc">$</span>prio25new10, <span class="at">na.rm =</span> T)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 726</code></pre>
+</div>
+</div>
+</section>
+<section id="question-2-proportions-croisées" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="question-2-proportions-croisées"><span class="header-section-number">2</span> Question 2 –&gt; proportions croisées</h2>
+<p>2.1 Parmis les individus qui sont dans des classes de petites taille (variable classtype), quelle proportion a eu un score en maths inférieur à 550 (variable math) dans la base de données STAR ?</p>
+<p>2.2 Parmis les individus de plus de 60 ans (variable age) quelle proportion on voté contre pour le Brexit (variable leave=0) dans la base de données BES ?</p>
+<p>2.3 Parmis les district qui ont accepté le Brexit à plus de 50% (variable leave), quelle proportion ont un taux d’habitant avec plus de 30% de personnes avec une formation suppérieur (variable high_education) dans la base de données UK_districts ?</p>
+<p>2.4 Parmis les pays qui ont un niveau moyen d’émission de lumière pendant la nuit entre 1992 et 1993 inférieur à 20, quelle proportion ont un un niveau moyen d’émission de lumière pendant la nuit entre 2005 et 2006 suppéreur à 15 dans la base de données countries ?</p>
+<p>2.5 Parmis les individus qui habitent dans un district qui reçoit la télévision russe (variable russian_tv), quelle proportion n’habite pas dans un rayon de 25 km de la frontière russe (variable within_25km) dans la base de données UA_survey ?</p>
+<p>2.6 Parmis les districts qui reçoivent la télévision russe (variable russian_tv), quelle proportion n’est pas dans un rayon de 25 km de la frontière russe (variable within_25km) dans la base de données UA_precints ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 2.1</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>STAR <span class="ot">&lt;-</span> STAR <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mathLess550 =</span> <span class="fu">ifelse</span>(math<span class="sc">&lt;</span><span class="dv">550</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(STAR[STAR<span class="sc">$</span>classtype<span class="sc">==</span><span class="st">"small"</span>,]<span class="sc">$</span>mathLess550))[<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          1 
+0.005128205 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 2.2</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(BES[BES<span class="sc">$</span>age<span class="sc">&gt;</span><span class="dv">60</span>,]<span class="sc">$</span>leave))[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        0 
+0.4049136 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 2.3</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> UK_districts <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educationAbove30 =</span><span class="fu">ifelse</span>(high_education<span class="sc">&gt;</span><span class="dv">30</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(UK_districts[UK_districts<span class="sc">$</span>leave<span class="sc">&gt;</span><span class="dv">50</span>,]<span class="sc">$</span>high_education))[<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      14.62 
+0.003802281 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 2.4</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> countries <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lightAbove15 =</span> <span class="fu">ifelse</span>(light<span class="sc">&gt;</span><span class="dv">15</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(countries[countries<span class="sc">$</span>prior_light<span class="sc">&lt;</span><span class="dv">20</span>,]<span class="sc">$</span>lightAbove15))[<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1 
+0.02409639 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 2.5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(UA_survey[UA_survey<span class="sc">$</span>russian_tv<span class="sc">==</span><span class="dv">1</span>,]<span class="sc">$</span>within_25km))[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   0 
+0.07 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 2.6</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(UA_precincts[UA_precincts<span class="sc">$</span>russian_tv<span class="sc">==</span><span class="dv">1</span>,]<span class="sc">$</span>within_25km))[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        0 
+0.4605452 </code></pre>
+</div>
+</div>
+</section>
+<section id="question-3-chi-carré" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="question-3-chi-carré"><span class="header-section-number">3</span> Question 3 –&gt; Chi carré</h2>
+<p>3.1 Y-a-t-il une dépendence entre le score de maths (variable math) et de lecture (variable reading) dans la base de données STAR ?</p>
+<p>Pour répondre: - Recoder les variables math et reading en 4 catégories: moins de 600, de 600 à 629, de 630 et 659, 660 et plus. - Faire un test du Chi-carré. - Reporter la réponse correct sur la valeur a valeur X_squared du test dans les réponses.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>STAR <span class="ot">&lt;-</span> STAR <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">math_cat =</span> <span class="fu">case_when</span>(math<span class="sc">&lt;</span><span class="dv">600</span> <span class="sc">~</span> <span class="st">"Très bas"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                              math<span class="sc">&gt;=</span><span class="dv">600</span> <span class="sc">&amp;</span> math<span class="sc">&lt;</span><span class="dv">630</span> <span class="sc">~</span> <span class="st">"Bas"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                              math<span class="sc">&gt;=</span><span class="dv">630</span> <span class="sc">&amp;</span> math<span class="sc">&lt;</span><span class="dv">660</span> <span class="sc">~</span> <span class="st">"Haut"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                              math<span class="sc">&gt;=</span><span class="dv">660</span> <span class="sc">~</span> <span class="st">"Très haut"</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">reading_cat =</span> <span class="fu">case_when</span>(reading<span class="sc">&lt;</span><span class="dv">600</span> <span class="sc">~</span> <span class="st">"Très bas"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                              reading<span class="sc">&gt;=</span><span class="dv">600</span> <span class="sc">&amp;</span> reading<span class="sc">&lt;</span><span class="dv">630</span> <span class="sc">~</span> <span class="st">"Bas"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                              reading<span class="sc">&gt;=</span><span class="dv">630</span> <span class="sc">&amp;</span> reading<span class="sc">&lt;</span><span class="dv">660</span> <span class="sc">~</span> <span class="st">"Haut"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                              reading<span class="sc">&gt;=</span><span class="dv">660</span> <span class="sc">~</span> <span class="st">"Très haut"</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(STAR<span class="sc">$</span>math_cat, STAR<span class="sc">$</span>reading_cat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  table(STAR$math_cat, STAR$reading_cat)
+X-squared = 664.75, df = 9, p-value &lt; 2.2e-16</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Réponse 3.1 p &lt; .001. Donc on rejette l'hypothèse d'indépendence, les résultats en maths et en lecture sont dépendant l'un de l'autre. </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>3.2 Y-a-t-il une dépendence entre le niveau d’éducation des individus (variable education) et leur classe d’âge (variable age) dans la base de données BES ?</p>
+<p>Pour répondre: - Recoder la variable age en 4 catégories: Moins de 25 ans, de 25 à 44 ans, de 45 à 64 ans, 65 ans ou plus - Recoder la variable education en 3 catégories: Bas (education = 1 ou 2), moyen (educatin = 3), haut (education = 4 ou 5). - Faire un test du Chi-carré. Attention, l’éducation est numérique dans la base de données. - Reporter la réponse correct sur la valeur X_squared du test dans les réponses.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>BES <span class="ot">&lt;-</span> BES <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_cat =</span> <span class="fu">case_when</span>(age<span class="sc">&lt;</span><span class="dv">25</span> <span class="sc">~</span> <span class="st">"&lt;25"</span>,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                             age<span class="sc">&gt;=</span><span class="dv">25</span> <span class="sc">&amp;</span> age<span class="sc">&lt;</span> <span class="dv">45</span><span class="sc">~</span> <span class="st">"de 25 à 44"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                             age<span class="sc">&gt;=</span><span class="dv">45</span> <span class="sc">&amp;</span> age<span class="sc">&lt;</span> <span class="dv">65</span><span class="sc">~</span> <span class="st">"de 45 à 64"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                             age<span class="sc">&gt;=</span><span class="dv">65</span> <span class="sc">~</span> <span class="st">"&gt;=65"</span>),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">educ_3 =</span> <span class="fu">case_when</span>(education<span class="sc">&lt;=</span><span class="dv">2</span> <span class="sc">~</span> <span class="st">"Bas"</span>, </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                            education<span class="sc">==</span><span class="dv">3</span> <span class="sc">~</span> <span class="st">"Moyen"</span>, </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                            education<span class="sc">&gt;</span><span class="dv">3</span> <span class="sc">~</span> <span class="st">"Haut"</span>))</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(BES<span class="sc">$</span>educ_3, BES<span class="sc">$</span>age_cat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  table(BES$educ_3, BES$age_cat)
+X-squared = 2437.7, df = 6, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>3.3 Y-a-t-il une dépendence entre le taux de personnes avec une formation supperieur (variable high_education) et le taux de vote en faveur du Brexit (variable leave) dans la base de données UK_districts ?</p>
+<p>Pour répondre: - Recoder la variable high_education en 4 catégories: Moins de 20%, égal à 20% et inférieur à 25%, égale à 25% et inférieur à 30%, 30% ou plus. - Recoder la variable leave en 4 catégories: Moins de 40%, égal à 40% et inférieur à 50%, égale à 50% et inférieur à 60%, 60% ou plus. - Faire un test du Chi-carré. - Reporter la réponse correct sur la valeur X_squared du test dans les réponses.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> UK_districts <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">high_educ_4 =</span> <span class="fu">case_when</span>(high_education<span class="sc">&lt;</span><span class="dv">20</span> <span class="sc">~</span> <span class="st">"Moins de 20"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                 high_education<span class="sc">&gt;=</span><span class="dv">20</span> <span class="sc">&amp;</span> high_education<span class="sc">&lt;</span><span class="dv">25</span> <span class="sc">~</span> <span class="st">"Entre 20 et 25"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                                 high_education<span class="sc">&gt;=</span><span class="dv">25</span> <span class="sc">&amp;</span> high_education<span class="sc">&lt;</span><span class="dv">30</span> <span class="sc">~</span> <span class="st">"Entre 25 et 30"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                                 high_education<span class="sc">&gt;=</span><span class="dv">30</span> <span class="sc">~</span> <span class="st">"30 et plus"</span>),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">leave_4 =</span> <span class="fu">case_when</span>(leave<span class="sc">&lt;</span><span class="dv">40</span> <span class="sc">~</span> <span class="st">"Moins de 40"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                             leave<span class="sc">&gt;=</span><span class="dv">40</span> <span class="sc">&amp;</span> leave<span class="sc">&lt;</span><span class="dv">50</span> <span class="sc">~</span> <span class="st">"Entre 40 et 50"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                             leave<span class="sc">&gt;=</span><span class="dv">50</span> <span class="sc">&amp;</span> leave<span class="sc">&lt;</span><span class="dv">60</span> <span class="sc">~</span> <span class="st">"Entre 50 et 60"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                             leave<span class="sc">&gt;=</span><span class="dv">60</span> <span class="sc">~</span> <span class="st">"60 et plus"</span>))</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(UK_districts<span class="sc">$</span>high_educ_4, UK_districts<span class="sc">$</span>leave_4))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  table(UK_districts$high_educ_4, UK_districts$leave_4)
+X-squared = 236.38, df = 9, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="question-4-comparaison-de-moyenne" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="question-4-comparaison-de-moyenne"><span class="header-section-number">4</span> Question 4 –&gt; Comparaison de moyenne</h2>
+<p>4.1 Quelle est la différence entre les moyenne dans les scores de lecture (variable reading) entre les individus qui sont dans une petite classe et une classe normale (variable classtype) dans la base de données STAR ? Cette différence est elle significative ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(reading <span class="sc">~</span> classtype, <span class="at">data =</span> STAR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  reading by classtype
+t = -3.4957, df = 1221, p-value = 0.0004899
+alternative hypothesis: true difference in means between group regular and group small is not equal to 0
+95 percent confidence interval:
+ -11.257410  -3.163683
+sample estimates:
+mean in group regular   mean in group small 
+             625.4920              632.7026 </code></pre>
+</div>
+</div>
+<p>4.2 Quelle est la différence entre les moyenne dans les scores de maths (variable math) entre les individus qui sont dans une petite classe et une classe normale (variable classtype) dans la base de données STAR ? Cette différence est elle significative ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(math <span class="sc">~</span> classtype, <span class="at">data =</span> STAR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  math by classtype
+t = -2.7404, df = 1219.3, p-value = 0.006227
+alternative hypothesis: true difference in means between group regular and group small is not equal to 0
+95 percent confidence interval:
+ -10.278265  -1.701545
+sample estimates:
+mean in group regular   mean in group small 
+             628.8374              634.8274 </code></pre>
+</div>
+</div>
+<p>4.3 Quelle est la différence de la moyenne d’âge (variable age) entre les individus qui ont soutenu et se sont opposés au Brexit (variable leave) dans la base de données BES ? Cette différence est elle significative ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(age <span class="sc">~</span> leave, <span class="at">data =</span> BES)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  age by leave
+t = -41.589, df = 27739, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -8.383171 -7.628547
+sample estimates:
+mean in group 0 mean in group 1 
+       47.24882        55.25467 </code></pre>
+</div>
+</div>
+<p>4.4 Quelle est la différence de moyenne du soutien au parti pro russe en 2014 (variable pro_russian) entre les districts qui sont à moins de 25 km de la frontières russe, et ceux qui sont à plus de 25 km de la frontière russe ? Cette différence est elle significative ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pro_russian <span class="sc">~</span> within_25km, <span class="at">data =</span> UA_precincts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  pro_russian by within_25km
+t = -5.952, df = 797.54, p-value = 3.966e-09
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -6.507216 -3.279582
+sample estimates:
+mean in group 0 mean in group 1 
+       25.97648        30.86988 </code></pre>
+</div>
+</div>
+</section>
+<section id="question-5-corrélation" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="question-5-corrélation"><span class="header-section-number">5</span> Question 5 –&gt; Corrélation</h2>
+<p>5.1 Quel est l’indice de corrélation entre les score de maths (variable math) et de lecture (variable reading) pour les individus dans la base de données STAR ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(STAR<span class="sc">$</span>math, STAR<span class="sc">$</span>reading)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7161218</code></pre>
+</div>
+</div>
+<p>5.2 Quel est l’indice de corrélation entre le taux de soutient du brexit (variable leave) et le taux de personnes avec une formation supérieur (variable high_education) pour les districts dans la base de données UK_districts ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(UK_districts<span class="sc">$</span>leave, UK_districts<span class="sc">$</span>high_education, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.7633185</code></pre>
+</div>
+</div>
+<p>5.3 Quel est l’indice de corrélation entre le PIB entre 1992 et 1993 (variable prior_gdp) et PIB entre 2005 et 2006 (variable gdp) pour les pays dans la base de données countries ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(countries<span class="sc">$</span>prior_gdp, countries<span class="sc">$</span>gdp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9903451</code></pre>
+</div>
+</div>
+<p>5.4 Quel est l’indice de corrélation entre le taux de vote pour le parti pro russe en 2012 (variable prior_pro_russian) et le taux de vote pour le parti pro russe en 2014 (variable pro_russian) pour les districts dans la base de donnée UA_precincts ?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(UA_precincts<span class="sc">$</span>prior_pro_russian, UA_precincts<span class="sc">$</span>pro_russian)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8093934</code></pre>
+</div>
+</div>
+</section>
+<section id="question-6-anova" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="question-6-anova"><span class="header-section-number">6</span> Question 6 –&gt; ANOVA</h2>
+<p>Avec la base de données BES:</p>
+<ul>
+<li>Faites un test anova pou comparer les moyennes de l’âge des individus (variable age) selon leur niveau d’éducation (variable eduaction, attention elle est de class numeric par défaut). Sur la base de ce test reportez:</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>BES<span class="sc">$</span>educ_cat <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(BES<span class="sc">$</span>education)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(age <span class="sc">~</span> educ_cat, <span class="at">data =</span> BES)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Df  Sum Sq Mean Sq F value Pr(&gt;F)    
+educ_cat        4  561058  140264   543.4 &lt;2e-16 ***
+Residuals   27465 7089848     258                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+3425 observations deleted due to missingness</code></pre>
+</div>
+</div>
+<p>6.1 Quelle est la valeur du score F</p>
+<p>6.2 Quelle est la valeur de <em>p</em></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
