@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxime Walder">
+<meta name="dcterms.date" content="2026-02-09">
+
+<title>Exercice 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Exercice_3_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Exercice_3_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Exercice_3_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Exercice_3_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Exercice_3_files/libs/quarto-html/popper.min.js"></script>
+<script src="Exercice_3_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Exercice_3_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Exercice_3_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Exercice_3_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Exercice_3_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Exercice_3_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Exercice_3_files/libs/bootstrap/bootstrap-0f9f7490fdc41efd1abaa8c23df3f716.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#importer-les-données" id="toc-importer-les-données" class="nav-link active" data-scroll-target="#importer-les-données"><span class="header-section-number">1</span> Importer les données</a></li>
+  <li><a href="#model-1-données-star" id="toc-model-1-données-star" class="nav-link" data-scroll-target="#model-1-données-star"><span class="header-section-number">2</span> Model 1 données STAR</a></li>
+  <li><a href="#model-2-données-bes" id="toc-model-2-données-bes" class="nav-link" data-scroll-target="#model-2-données-bes"><span class="header-section-number">3</span> Model 2 données BES</a></li>
+  <li><a href="#model-3-données-uk_districts" id="toc-model-3-données-uk_districts" class="nav-link" data-scroll-target="#model-3-données-uk_districts"><span class="header-section-number">4</span> Model 3 données UK_districts</a></li>
+  <li><a href="#model-4-données-countries" id="toc-model-4-données-countries" class="nav-link" data-scroll-target="#model-4-données-countries"><span class="header-section-number">5</span> Model 4 données countries</a></li>
+  <li><a href="#model-5-données-ua_survey" id="toc-model-5-données-ua_survey" class="nav-link" data-scroll-target="#model-5-données-ua_survey"><span class="header-section-number">6</span> Model 5 données UA_survey</a></li>
+  <li><a href="#model-6-données-ua_precincts" id="toc-model-6-données-ua_precincts" class="nav-link" data-scroll-target="#model-6-données-ua_precincts"><span class="header-section-number">7</span> Model 6 données UA_precincts</a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1"><span class="header-section-number">8</span> Question 1:</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2"><span class="header-section-number">9</span> Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3"><span class="header-section-number">10</span> Question 3</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4"><span class="header-section-number">11</span> Question 4</a></li>
+  <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5"><span class="header-section-number">12</span> Question 5</a></li>
+  <li><a href="#question-6" id="toc-question-6" class="nav-link" data-scroll-target="#question-6"><span class="header-section-number">13</span> Question 6</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exercice 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maxime Walder </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 9, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="importer-les-données" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="importer-les-données"><span class="header-section-number">1</span> Importer les données</h2>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>STAR <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/STAR.csv"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>BES <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/BES.csv"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UK_districts.csv"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/countries.csv"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>UA_survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UA_survey.csv"</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>UA_precincts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UA_precincts.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+<section id="model-1-données-star" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="model-1-données-star"><span class="header-section-number">2</span> Model 1 données STAR</h2>
+<p>Avec les données STAR, faites une régression logistique multivariée avec:</p>
+<ul>
+<li><p>Variable dépendente: Obtention du dipôme ou non (variable graduated).</p></li>
+<li><p>Variable indépendente 1: score de lecture (variable reading)</p></li>
+<li><p>Variable indépendante 2: score de maths (variable math)</p></li>
+<li><p>Variable indépendante 3: le type de classe (variable classtype)</p></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_STAR <span class="ot">&lt;-</span> <span class="fu">glm</span>(graduated<span class="sc">~</span>reading<span class="sc">+</span>math<span class="sc">+</span>classtype, <span class="at">data =</span> STAR, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_STAR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = graduated ~ reading + math + classtype, family = binomial(link = "logit"), 
+    data = STAR)
+
+Coefficients:
+                 Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)    -13.284430   1.716401  -7.740 9.97e-15 ***
+reading          0.008288   0.003569   2.322   0.0202 *  
+math             0.016245   0.003522   4.612 3.99e-06 ***
+classtypesmall  -0.069345   0.174825  -0.397   0.6916    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 985.96  on 1273  degrees of freedom
+Residual deviance: 894.81  on 1270  degrees of freedom
+AIC: 902.81
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<p>Model 1 : STAR: glm(graduated~reading+math+classtype)</p>
+<ul>
+<li><p>Observation dans le model</p></li>
+<li><p>Pouvoir explicatif du model</p></li>
+<li><p>Constante</p></li>
+<li><p>Effet reading</p></li>
+<li><p>Effet math</p></li>
+<li><p>Effet du type de classe</p></li>
+</ul>
+</section>
+<section id="model-2-données-bes" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="model-2-données-bes"><span class="header-section-number">3</span> Model 2 données BES</h2>
+<p>Avec les données BES, faites une régression logistique multivariée avec:</p>
+<ul>
+<li><p>Variable dépendente: Vote pour le Brexit (variable leave).</p></li>
+<li><p>Variable indépendente 1: Le niveau d’éducation en cinq en trois catégories (variable educaion, 1-2 = Bas, 3 = Moyen, 4-5 = Haut)</p></li>
+<li><p>Variable indépendante 2: L’age des individus en 4 catégories (variable age, Moins de 25 ans, de 25 à 44 ans, de 45 à 64 ans, 65 ans ou plus).</p></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1 recoder les variables </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>BES <span class="ot">&lt;-</span> BES <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_cat =</span> <span class="fu">case_when</span>(age<span class="sc">&lt;</span><span class="dv">25</span> <span class="sc">~</span> <span class="st">"&lt;25"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                             age<span class="sc">&gt;=</span><span class="dv">25</span> <span class="sc">&amp;</span> age<span class="sc">&lt;</span> <span class="dv">45</span><span class="sc">~</span> <span class="st">"de 25 à 44"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                             age<span class="sc">&gt;=</span><span class="dv">45</span> <span class="sc">&amp;</span> age<span class="sc">&lt;</span> <span class="dv">65</span><span class="sc">~</span> <span class="st">"de 45 à 64"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                             age<span class="sc">&gt;=</span><span class="dv">65</span> <span class="sc">~</span> <span class="st">"&gt;=65"</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">educ_3 =</span> <span class="fu">case_when</span>(education<span class="sc">&lt;=</span><span class="dv">2</span> <span class="sc">~</span> <span class="st">"Bas"</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                            education<span class="sc">==</span><span class="dv">3</span> <span class="sc">~</span> <span class="st">"Moyen"</span>, </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                            education<span class="sc">&gt;</span><span class="dv">3</span> <span class="sc">~</span> <span class="st">"Haut"</span>))</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 régression logistique: </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>model_BES <span class="ot">&lt;-</span> <span class="fu">glm</span>(leave<span class="sc">~</span>educ_3 <span class="sc">+</span> age_cat, <span class="at">data =</span> BES, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_BES)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = leave ~ educ_3 + age_cat, family = binomial(link = "logit"), 
+    data = BES)
+
+Coefficients:
+                  Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)       -0.55145    0.05657  -9.748   &lt;2e-16 ***
+educ_3Haut        -1.17793    0.03251 -36.230   &lt;2e-16 ***
+educ_3Moyen       -0.56032    0.03874 -14.462   &lt;2e-16 ***
+age_cat&gt;=65        1.54679    0.05671  27.275   &lt;2e-16 ***
+age_catde 25 à 44  0.83124    0.05674  14.651   &lt;2e-16 ***
+age_catde 45 à 64  1.34321    0.05394  24.902   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 34712  on 25096  degrees of freedom
+Residual deviance: 31774  on 25091  degrees of freedom
+  (5798 observations deleted due to missingness)
+AIC: 31786
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>Model 2 : BES: glm(leave~education_group + age_groupe)</p>
+<ul>
+<li><p>Observation dans le model</p></li>
+<li><p>Pouvoir explicatif du model</p></li>
+<li><p>Constante</p></li>
+<li><p>Effet 50+ pour age</p></li>
+<li><p>Effet education 4+</p></li>
+</ul>
+</section>
+<section id="model-3-données-uk_districts" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="model-3-données-uk_districts"><span class="header-section-number">4</span> Model 3 données UK_districts</h2>
+<p>Avec les données UK_districts, faites une régression linéaire avec:</p>
+<ul>
+<li><p>Variable dépendente: Vote pour le Brexit (variable leave).</p></li>
+<li><p>Variable indépendente 1: Le taux de personnes avec une formation suppérieur (variable high_education).</p></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model_UK_districts <span class="ot">&lt;-</span> <span class="fu">lm</span>(leave<span class="sc">~</span>high_education, <span class="at">data =</span> UK_districts)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_UK_districts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = leave ~ high_education, data = UK_districts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-32.767  -1.800   1.701   4.386  14.525 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    81.04971    1.26311   64.17   &lt;2e-16 ***
+high_education -1.03663    0.04513  -22.97   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.738 on 378 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.5827,    Adjusted R-squared:  0.5816 
+F-statistic: 527.7 on 1 and 378 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Model 3 : UK_districts: lm(leave~higher_education)</p>
+<ul>
+<li><p>Observation dans le model</p></li>
+<li><p>Pouvoir explicatif du model</p></li>
+<li><p>Constante</p></li>
+<li><p>Effet higher education</p></li>
+</ul>
+</section>
+<section id="model-4-données-countries" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="model-4-données-countries"><span class="header-section-number">5</span> Model 4 données countries</h2>
+<p>Avec les données countries, faites une régression linéaire avec:</p>
+<ul>
+<li><p>Variable dépendente: la différence entre le niveau moyen d’émission de lumière pendant la nuit entre 2005 et 2006, et le niveau moyen d’émission de lumière pendant la nuit entre 1992 et 1993 (variable light - variable prior_light.</p></li>
+<li><p>Variable indépendente: Le taux de croissance du PIB entre les années 2005-2006 et les années 1992-1993 (variable gdp/variable prior_gdp).</p></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> countries <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gdp_growth =</span> gdp<span class="sc">/</span>prior_gdp,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">light_change =</span> light <span class="sc">-</span> prior_light)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>model_countries <span class="ot">&lt;-</span> <span class="fu">lm</span>(light_change<span class="sc">~</span>gdp_growth, <span class="at">data =</span> countries)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_countries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = light_change ~ gdp_growth, data = countries)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.7711 -0.6037 -0.3531  0.3072  7.9251 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  -0.1120     0.4283  -0.261   0.7941  
+gdp_growth    0.4454     0.2543   1.751   0.0817 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.378 on 168 degrees of freedom
+Multiple R-squared:  0.01793,   Adjusted R-squared:  0.01209 
+F-statistic: 3.068 on 1 and 168 DF,  p-value: 0.08169</code></pre>
+</div>
+</div>
+<p>Model 4 : countries : lm (diff_light ~ diff_GDP_percent)</p>
+<ul>
+<li><p>Observation dans le model</p></li>
+<li><p>Pouvoir explicatif du model</p></li>
+<li><p>Constante</p></li>
+<li><p>Effet diff_GDP_percent</p></li>
+</ul>
+</section>
+<section id="model-5-données-ua_survey" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="model-5-données-ua_survey"><span class="header-section-number">6</span> Model 5 données UA_survey</h2>
+<p>Avec les données UA_survey, faites une régression logistique multivariée avec:</p>
+<ul>
+<li><p>Variable dépendente: Le vote pour le parti pro russe (variable pro_russian_vote).</p></li>
+<li><p>Variable indépendente 1: La récéption de la télévision russe dans le district du répondants (variable russian_tv).</p></li>
+<li><p>Variable indépendante 2: La proximité du district du répondant avec la frontière russe - +/- de 25 km (variable within_25km)</p></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model_UA_survey <span class="ot">&lt;-</span> <span class="fu">glm</span>(pro_russian_vote<span class="sc">~</span>russian_tv<span class="sc">+</span>within_25km, <span class="at">data =</span> UA_survey)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_UA_survey)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = pro_russian_vote ~ russian_tv + within_25km, data = UA_survey)
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.19591    0.03458   5.666 3.03e-08 ***
+russian_tv   0.28759    0.07652   3.758  0.00020 ***
+within_25km -0.20806    0.07681  -2.709  0.00708 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for gaussian family taken to be 0.1754333)
+
+    Null deviance: 64.818  on 357  degrees of freedom
+Residual deviance: 62.279  on 355  degrees of freedom
+AIC: 397.85
+
+Number of Fisher Scoring iterations: 2</code></pre>
+</div>
+</div>
+<p>UA_survey : glm(pro_russian_vote~russian_tv+within_25km)</p>
+<ul>
+<li><p>Observation dans le model</p></li>
+<li><p>Pouvoir explicatif du model</p></li>
+<li><p>Constante</p></li>
+<li><p>Effet russian_tv</p></li>
+<li><p>Effect within25km</p></li>
+</ul>
+</section>
+<section id="model-6-données-ua_precincts" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="model-6-données-ua_precincts"><span class="header-section-number">7</span> Model 6 données UA_precincts</h2>
+<p>Avec les données UA_precincts, faites une régression linéaire multivariée avec:</p>
+<ul>
+<li><p>Variable dépendente: La part de vote pour le parti pro russe dans le district en 2014 (variable pro_russian).</p></li>
+<li><p>Variable indépendante 1: La part de vote pour le parti pro russe dans le district en 2012 (variable prior_pro_russian)</p></li>
+<li><p>Variable indépendente 2: La récéption de la télévision russe dans le district (variable russian_tv).</p></li>
+<li><p>Variable indépendante 3: La proximité du district avec la frontière russe - +/- de 25 km (variable within_25km)</p></li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_UA_precincts <span class="ot">&lt;-</span> <span class="fu">lm</span>(pro_russian<span class="sc">~</span>prior_pro_russian<span class="sc">+</span>russian_tv<span class="sc">+</span>within_25km, <span class="at">data =</span> UA_precincts)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_UA_precincts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pro_russian ~ prior_pro_russian + russian_tv + within_25km, 
+    data = UA_precincts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-38.072  -6.540   0.385   6.538  32.284 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       -14.508382   0.493372  -29.41   &lt;2e-16 ***
+prior_pro_russian   0.797343   0.009383   84.98   &lt;2e-16 ***
+russian_tv         10.787766   0.521531   20.68   &lt;2e-16 ***
+within_25km       -12.864096   0.572673  -22.46   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 10.31 on 3585 degrees of freedom
+Multiple R-squared:  0.7064,    Adjusted R-squared:  0.7062 
+F-statistic:  2875 on 3 and 3585 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="question-1" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="question-1"><span class="header-section-number">8</span> Question 1:</h2>
+<p>1.1 Dans le model 1 sur les données STAR quel pourcentage des données du jeu complet est inclut dans le model?</p>
+<p>1.2 Dans le model 2 sur les données BES quel pourcentage des données du jeu complet est inclut dans le model?</p>
+<p>1.3 Dans le model 3 sur les données UK_districts quel pourcentage des données du jeu complet est inclut dans le model?</p>
+<p>1.4 Dans le model 4 sur les données countries quel pourcentage des données du jeu complet est inclut dans le model?</p>
+<p>1.5 Dans le model 5 sur les données UA_survey quel pourcentage des données du jeu complet est inclut dans le model?</p>
+<p>1.6 Dans le model 6 sur les données UA_precincts quel pourcentage des données du jeu complet est inclut dans le model?</p>
+</section>
+<section id="question-2" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="question-2"><span class="header-section-number">9</span> Question 2</h2>
+<p>2.1 Dans le model 1 sur les données STAR quelle affirmation sur la constante est correct?</p>
+<ul>
+<li>la constante est positive et a un niveau de significativité suppérieur à 99.9%.</li>
+<li>la constante est positive et a un niveau de significativité suppérieur à 95%, mais pas supérieur à 99.9%.</li>
+<li>la constante est positive mais a un niveau de significativité inférieur à 99.9%.</li>
+<li>la constante est négative et a un niveau de significativité suppérieur à 99.9%.</li>
+<li>la constante est négative et a un niveau de significativité suppérieur à 95%, mais pas supérieur à 99.9%.</li>
+<li>la constante est négative mais a un niveau de significativité inférieur à 99.9%.</li>
+</ul>
+<p>2.2 Dans le model 2 sur les données BES quelle affirmation sur la constante est correct?</p>
+<p>2.3 Dans le model 3 sur les données UK_districts quelle affirmation sur la constante est correct?</p>
+<p>2.4 Dans le model 4 sur les données countries quelle affirmation sur la constante est correct?</p>
+<p>2.5 Dans le model 5 sur les données UA_survey quelle affirmation sur la constante est correct?</p>
+<p>2.6 Dans le model 6 sur les données UA_precincts quelle affirmation sur la constante est correct?</p>
+</section>
+<section id="question-3" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="question-3"><span class="header-section-number">10</span> Question 3</h2>
+<p>3.1 Dans le model 3 sur les données UK_districts quel pourcentage de la variance de la variable dépendente est expliquée par le model (coeficient de détermination)?</p>
+<p>3.2 Dans le model 4 sur les données countries quel pourcentage de la variance de la variable dépendente est expliquée par le model (coeficient de détermination)?</p>
+<p>3.3 Dans le model 6 sur les données UA_precincts quel pourcentage de la variance de la variable dépendente est expliquée par le model (coeficient de détermination)?</p>
+</section>
+<section id="question-4" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="question-4"><span class="header-section-number">11</span> Question 4</h2>
+<p>4.1 Dans le model 1 sur les données STAR combien de variables ont un effet significatif à plus de 99.9% ?</p>
+<p>4.2 Dans le model 2 sur les données BES ont un effet significatif à plus de 99.9% ?</p>
+<p>4.3 Dans le model 3 sur les données UK_districts ont un effet significatif à plus de 99.9% ?</p>
+<p>4.4 Dans le model 4 sur les données countries ont un effet significatif à plus de 99.9% ?</p>
+<p>4.5 Dans le model 5 sur les données UA_survey ont un effet significatif à plus de 99.9% ?</p>
+<p>4.6 Dans le model 6 sur les données UA_precincts ont un effet significatif à plus de 99.9% ?</p>
+</section>
+<section id="question-5" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="question-5"><span class="header-section-number">12</span> Question 5</h2>
+<p>5.1 Dans le model 1 sur les données STAR combien de variables combien de variables ont un coeficient de regression négatif ?</p>
+<p>5.2 Dans le model 2 sur les données BES combien de variables ont un coeficient de regression négatif ?</p>
+<p>5.3 Dans le model 3 sur les données UK_districts combien de variables ont un coeficient de regression négatif ?</p>
+<p>5.4 Dans le model 4 sur les données countries combien de variables ont un coeficient de regression négatif ?</p>
+<p>5.5 Dans le model 5 sur les données UA_survey combien de variables ont un coeficient de regression négatif ?</p>
+<p>5.6 Dans le model 6 sur les données UA_precincts combien de variables ont un coeficient de regression négatif ?</p>
+</section>
+<section id="question-6" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="question-6"><span class="header-section-number">13</span> Question 6</h2>
+<p>6.1 Dans le model 1 sur les données STAR combien de variables ont un coeficient de regression positif et significatif à plus de 95% ?</p>
+<p>6.2 Dans le model 2 sur les données BES combien de variables ont un coeficient de regression positif et significatif à plus de 95% ?</p>
+<p>6.3 Dans le model 3 sur les données UK_districts combien de variables ont un coeficient de regression positif et significatif à plus de 95% ?</p>
+<p>6.4 Dans le model 4 sur les données countries combien de variables ont un coeficient de regression positif et significatif à plus de 95% ?</p>
+<p>6.5 Dans le model 5 sur les données UA_survey combien de variables ont un coeficient de regression positif et significatif à plus de 95% ?</p>
+<p>6.6 Dans le model 6 sur les données UA_precincts combien de variables ont un coeficient de regression positif et significatif à plus de 95% ?</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
