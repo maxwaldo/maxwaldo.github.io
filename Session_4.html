@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Maxime Walder">
+<meta name="dcterms.date" content="2026-02-09">
+
+<title>Session 4. Régressions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Session_4_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Session_4_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Session_4_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Session_4_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Session_4_files/libs/quarto-html/popper.min.js"></script>
+<script src="Session_4_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Session_4_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Session_4_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Session_4_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Session_4_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Session_4_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Session_4_files/libs/bootstrap/bootstrap-0f9f7490fdc41efd1abaa8c23df3f716.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#organisation-du-document" id="toc-organisation-du-document" class="nav-link active" data-scroll-target="#organisation-du-document"><span class="header-section-number">1</span> Organisation du document</a></li>
+  <li><a href="#sec1" id="toc-sec1" class="nav-link" data-scroll-target="#sec1"><span class="header-section-number">2</span> Objecifs de la session</a></li>
+  <li><a href="#sec2" id="toc-sec2" class="nav-link" data-scroll-target="#sec2"><span class="header-section-number">3</span> Types de régressions dans R</a>
+  <ul class="collapse">
+  <li><a href="#importer-les-données." id="toc-importer-les-données." class="nav-link" data-scroll-target="#importer-les-données."><span class="header-section-number">3.1</span> Importer les données.</a></li>
+  </ul></li>
+  <li><a href="#sec3" id="toc-sec3" class="nav-link" data-scroll-target="#sec3"><span class="header-section-number">4</span> Régressions linéaires</a>
+  <ul class="collapse">
+  <li><a href="#régressions-linéraires-simples" id="toc-régressions-linéraires-simples" class="nav-link" data-scroll-target="#régressions-linéraires-simples"><span class="header-section-number">4.1</span> Régressions linéraires simples</a></li>
+  <li><a href="#comprendre-loutput-dune-régression-linéaire." id="toc-comprendre-loutput-dune-régression-linéaire." class="nav-link" data-scroll-target="#comprendre-loutput-dune-régression-linéaire."><span class="header-section-number">4.2</span> Comprendre l’output d’une régression linéaire.</a></li>
+  <li><a href="#régression-linéaire-multiple" id="toc-régression-linéaire-multiple" class="nav-link" data-scroll-target="#régression-linéaire-multiple"><span class="header-section-number">4.3</span> Régression linéaire multiple</a></li>
+  </ul></li>
+  <li><a href="#sec4" id="toc-sec4" class="nav-link" data-scroll-target="#sec4"><span class="header-section-number">5</span> Les interactions</a></li>
+  <li><a href="#sec5" id="toc-sec5" class="nav-link" data-scroll-target="#sec5"><span class="header-section-number">6</span> Les variables catégorielles dans les régressions</a></li>
+  <li><a href="#sec6" id="toc-sec6" class="nav-link" data-scroll-target="#sec6"><span class="header-section-number">7</span> Les régressions logistiques</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Session 4. Régressions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Maxime Walder </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 9, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="organisation-du-document" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="organisation-du-document"><span class="header-section-number">1</span> Organisation du document</h2>
+<ul>
+<li><a href="#sec1">Objectifs de la session</a></li>
+<li><a href="#sec2">Types de régressions dans R</a></li>
+<li><a href="#sec3">Régressions linéaires</a></li>
+<li><a href="#sec4">Les interactions</a></li>
+<li><a href="#sec5">Les variables catégorielles dans les régressions</a></li>
+<li><a href="#sec6">Les régressions logistiques</a></li>
+</ul>
+</section>
+<section id="sec1" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sec1"><span class="header-section-number">2</span> Objecifs de la session</h2>
+<p>Dans ce document, nous allons aborder les régression dans R. À la fin de cette session, vous devriez être capable de:</p>
+<ul>
+<li>Faire une régression linéaire dans R</li>
+<li>Ajouter des variables de contrôle à vos modèles</li>
+<li>Inclure et interpréter l’effet de variable catégorielle</li>
+<li>Calculer des valeur prédites de votre variable dépendante selon un modèle de régression</li>
+<li>Inclure un terme d’interaction dans vos modèles</li>
+<li>Faire une régression logistique</li>
+</ul>
+</section>
+<section id="sec2" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sec2"><span class="header-section-number">3</span> Types de régressions dans R</h2>
+<p>Avec R, il y a beaucoup de modèles de régression différents que vous pouvez faire avec le code de base. Des packages ont aussi été développés pour faire des régressions plus spécifiques - multiniveau, modèle bayésien, etc.</p>
+<p>Dans cette session, nous allons nous intéresser aux:</p>
+<ul>
+<li>Régressions linéaires simples (1 IV)</li>
+<li>Régressions linéaire multiples (2+ IV)</li>
+<li>Termes d’interaction dans les régressions</li>
+<li>Variables catégorielles dans les régressions</li>
+<li>Régressions logistiques`</li>
+</ul>
+<section id="importer-les-données." class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="importer-les-données."><span class="header-section-number">3.1</span> Importer les données.</h3>
+<p>Avant de donner des exemples concrets, nous pouvons importer les six bases de données présentées lors de la session 2.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>STAR <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/STAR.csv"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>BES <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/BES.csv"</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UK_districts.csv"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>countries <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/countries.csv"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>UA_survey <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UA_survey.csv"</span>))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>UA_precincts <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">url</span>(<span class="st">"https://raw.githubusercontent.com/ellaudet/DSS/refs/heads/master/UA_precincts.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
+<section id="sec3" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec3"><span class="header-section-number">4</span> Régressions linéaires</h2>
+<p>Les régressions linéaires sont des régressions avec une variable dépendante métrique. Cela signifie que ce que vous voulez expliquer a des valeurs numériques.</p>
+<p>Par exemple:</p>
+<ul>
+<li>Comment le genre, l’âge et le statut socio-professionnel des individus influencent leur revenu ?</li>
+</ul>
+<p>Dans ce cas, le revenu est ce que l’on veut expliquer. Si notre variable sur le revenu est métrique (par exemple, le revenu mensuel en $), alors on peut utiliser une régression linéaire.</p>
+<p>Il existe plusieurs conditions à l’utilisation des régressions (cf.&nbsp;cours). Dans cette session, nous allons nous intéresser à l’application des régressions dans R.</p>
+<section id="régressions-linéraires-simples" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="régressions-linéraires-simples"><span class="header-section-number">4.1</span> Régressions linéraires simples</h3>
+<p>Tout d’abord, nous allons prendre l’exemple de régression le plus basique: la régression linéaire simple.</p>
+<p>C’est une régression linéaire avec une seule variable indépendante. Elle répond à la question:</p>
+<ul>
+<li>Quel est l’effet de X sur Y?
+<ul>
+<li>Y est donc la variable dépendante</li>
+<li>X est donc la variable indépendante</li>
+</ul></li>
+</ul>
+<p>Pour modéliser cela dans R, il faut utiliser la fonction <code>lm(Y~X, données)</code>.</p>
+<p>Par exemple, si on se demande, quel est l’effet de la proximité avec la frontière russe sur le soutien du parti pro-russe en 2014?</p>
+<p>Dans ce cas, on peut utiliser les données UA_precints, dans lesquelles on prend:</p>
+<ul>
+<li>pro_russian comme variable dépendante</li>
+<li>within_25km comme variable indépendante</li>
+</ul>
+<p>Dans R on fait:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pro_russian<span class="sc">~</span>within_25km, UA_precincts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Les résultats de notre régression sont maintenant assignés à l’objet <code>model_1</code>.</p>
+<p>Nous avons maintenant fait notre régression linéaire simple ; il faut maintenant pouvoir interpréter les résultats.</p>
+</section>
+<section id="comprendre-loutput-dune-régression-linéaire." class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="comprendre-loutput-dune-régression-linéaire."><span class="header-section-number">4.2</span> Comprendre l’output d’une régression linéaire.</h3>
+<p>L’objet <code>model_1</code> contient beaucoup d’informations. Heureusement, nous pouvons utiliser la fonction <code>summary()</code> pour extraire les informations principales de cet objet.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pro_russian ~ within_25km, data = UA_precincts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-29.175 -17.515  -5.824  18.516  52.925 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  25.9765     0.3431  75.714  &lt; 2e-16 ***
+within_25km   4.8934     0.8820   5.548  3.1e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 18.94 on 3587 degrees of freedom
+Multiple R-squared:  0.008507,  Adjusted R-squared:  0.008231 
+F-statistic: 30.78 on 1 and 3587 DF,  p-value: 3.103e-08</code></pre>
+</div>
+</div>
+<p>Dans l’output on a 4 types d’information:</p>
+<ul>
+<li>La partie <code>Call</code> donne la formule que nous avons estimée.</li>
+<li>La partie <code>Residuals</code> présente la distribution des résidus (erreurs de prédiction).</li>
+<li>La partie <code>Coefficients</code>, nous indique les informations principales pour un tableau de régression.</li>
+<li>Le bas du summary donne des informations générales sur le modèle (écart-type des résidus, coefficient de détermination R Squared, F-score et significativité du F-Score).</li>
+</ul>
+<p>Toutes ces informations sont importantes (cf.&nbsp;cours), cependant, nous allons dans cette session nous attarder sur la partie <code>Coefficients</code> qui nous présente les informations importantes pour comprendre notre régression.</p>
+<p>Dans cette partie, on a un tableau qui a 5 colonnes et des <code>***</code>. Dans l’ordre ces informations indiquent:</p>
+<ul>
+<li><p>Les variables incluses dans le modèle. Dans ce cas, nous avons simplement une constante <code>(Intercept)</code> et within_25km, qui est notre variable indépendante.</p></li>
+<li><p><code>Estimate</code> présente les <em>coefficients de régression</em>. Ces coefficients indiquent l’effet de nos variables indépendantes sur notre variable dépendante. Dans notre cas on a:</p>
+<ul>
+<li><code>(Intercept)</code> = 25.98. Cela indique que quand notre variable indépendante = 0, la valeur prédite de notre variable dépendante est 25.98.</li>
+<li><code>within_25km</code> = 4.98. Cela nous indique l’effet de notre variable indépendante sur notre variable dépendante. Elle indique de combien la valeur prédite de notre variable dépendante augmente quand notre variable dépendante augmente de 1.</li>
+</ul></li>
+<li><p><code>Std. Error</code> indique l’écart-type de notre coefficient. C’est sur cette base que sont calculées la <em>t-value</em> et la <em>p-value</em>.</p></li>
+<li><p><code>t value</code> indique le score du t-test.</p></li>
+<li><p><code>Pr(&gt;|t|)</code> indique la <em>p-value</em> du coefficient. Cette valeur teste les hypothèses suivantes:</p>
+<ul>
+<li>H0: la variable n’a pas d’effet.</li>
+<li>H1: la variable a un effet.</li>
+</ul></li>
+<li><p>Éventuellement: Les étoiles. Indique le test de significativité que le coefficient passe, basé sur la légende en bas du tableau.</p>
+<ul>
+<li><code>Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</code></li>
+<li>Ce qui signifie:
+<ul>
+<li>Entre 0 et 0.001 <code>***</code>, significatif au-dessus de 99.9%</li>
+<li>Entre 0.001 et 0.01 <code>**</code>, significatif au-dessus de 99% mais pas de 99.9%</li>
+<li>Entre 0.01 et 0.05 <code>*</code>, significatif au-dessus de 95% mais pas de 99%</li>
+<li>Entre 0.05 et 0.1 <code>+</code>, significatif au-dessus de 90% mais pas de 95%</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Dans notre cas, on voit donc que l’effet de la variable <code>within_25km</code> est positif (coefficient de régression au-dessus de 0) et significatif à plus de 99,9 % (<em>p-value</em> &lt; 2.2e10^-16, et <code>***</code>).</p>
+</section>
+<section id="régression-linéaire-multiple" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="régression-linéaire-multiple"><span class="header-section-number">4.3</span> Régression linéaire multiple</h3>
+<p>Il est rare que l’on s’arrête à des régressions simples - avec une seule variable indépendante. En pratique, les régressions permettent de tester l’effet conjoint de plusieurs variables, en tenant d’autres variables sous contrôle.</p>
+<p>Par exemple, nous avons vu dans la dernière session que la proximité des districts avec la frontière russe n’est pas indépendante de la réception de la télévision russe. Le tableau et le test du chi carré présentés ci-dessous nous résument cela.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(UA_precincts<span class="sc">$</span>russian_tv, UA_precincts<span class="sc">$</span>within_25km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+       0    1
+  0 2725  167
+  1  321  376</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(UA_precincts<span class="sc">$</span>russian_tv, UA_precincts<span class="sc">$</span>within_25km)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  UA_precincts$russian_tv and UA_precincts$within_25km
+X-squared = 1011.2, df = 1, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>On a donc une distribution inégale de la télévision russe dans les districts proches de la frontière et dans ceux plus éloignés de la frontière. Pour aller plus loin, on peut aussi comparer la proportion des districts proches et éloignés de la frontière qui reçoivent la télévision russe:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion des districts à plus de 25 km de la frontière</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(UA_precincts[UA_precincts<span class="sc">$</span>within_25km<span class="sc">==</span><span class="dv">0</span>,]<span class="sc">$</span>russian_tv)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.8946159 0.1053841 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># proportion des districts à moins de 25 km de la frontière</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(UA_precincts[UA_precincts<span class="sc">$</span>within_25km<span class="sc">==</span><span class="dv">1</span>,]<span class="sc">$</span>russian_tv))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.3075506 0.6924494 </code></pre>
+</div>
+</div>
+<p>On voit que seuls 10% des districts à plus de 25 km de la frontière reçoivent la télévision russe, alors que près de 70% des districts proches de la frontière la reçoivent. Dans ce cas, il est important de se demander si c’est la proximité avec la frontière russe ou la réception de la télévision russe qui influence le vote pour le parti pro-russe.</p>
+<p>Pour ce faire on peut faire une régression linéaire multivariée avec:</p>
+<ul>
+<li>pro_russian comme variable dépendante</li>
+<li>within_25km comme première variable indépendante</li>
+<li>russian_tv comme deuxième variable indépendante</li>
+</ul>
+<p>En pratique, dans R, on additionne les effets des variables. On a donc:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pro_russian<span class="sc">~</span>within_25km<span class="sc">+</span>russian_tv, UA_precincts)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pro_russian ~ within_25km + russian_tv, data = UA_precincts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-41.117 -15.707  -4.768  14.137  54.877 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  24.0247     0.3375  71.181  &lt; 2e-16 ***
+within_25km  -5.9795     0.9841  -6.076 1.36e-09 ***
+russian_tv   18.5208     0.8915  20.776  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 17.89 on 3586 degrees of freedom
+Multiple R-squared:  0.115, Adjusted R-squared:  0.1145 
+F-statistic: 233.1 on 2 and 3586 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Les résultats du <code>model_2</code> présentent une image très différente du <code>model_1</code> en effet on observe que:</p>
+<ul>
+<li>Sous contrôle de la réception de la télévision russe, la proximité avec la frontière russe diminue le vote pour le parti pro-russe.</li>
+<li>La réception de la télévision russe augmente le vote pour le parti pro-russe.</li>
+</ul>
+<p>Les régressions linéaires multivariées sont donc des outils puissants pour estimer l’effet de certaines variables sur d’autres variables.</p>
+<p>Cependant, en les utilisant, on modélise une version de la réalité qui n’est pas conforme avec la réalité qui est bien plus complexe.</p>
+<p>Le but d’une régression est de s’assurer que l’effet de X sur Y que l’on observe est bien dû à X et non à une variable omise Z.</p>
+<p>Une phase souvent citée peut se paraphraser par: Toutes les régressions sont fausses, mais certaines sont utiles.</p>
+<p>In fine, en sciences sociales, les régressions présentent une modélisation simplifiée des réalités sociales. Cependant, ce n’est pas parce que cette modélisation est simplifiée qu’elle n’est pas utile pour comprendre certains phénomènes sociaux.</p>
+<p>Avant de faire vos régressions, demandez-vous: au-delà des variables incluses dans mes modèles, y a-t-il un autre élément qui puisse influencer la variance de ma variable dépendante ?</p>
+</section>
+</section>
+<section id="sec4" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec4"><span class="header-section-number">5</span> Les interactions</h2>
+<p>Jusqu’à présent, nous avons testé l’effet <em>direct</em> de nos variables indépendantes sur notre variable dépendante. Cependant, on peut aussi considérer qu’il y a certains phénomènes qui sont influencés par l’interaction entre plusieurs variables.</p>
+<p>Par exemple:</p>
+<ul>
+<li>L’effet du genre et de la classe d’âge sur le revenu.</li>
+<li>La classe d’âge n’a pas le même effet sur le revenu pour les hommes ou pour les femmes (par exemple maternité).</li>
+<li>On peut donc considérer et émettre l’hypothèse d’un effet d’interaction entre la classe d’âge et le genre sur le revenu.</li>
+</ul>
+<p>Dans notre cas, on peut aussi se demander si l’effet de réceptionner la télévision russe sur le vote pour le parti pro-russe est le même pour les districts proches et éloignés de la frontière.</p>
+<p>Pour répondre à cette question, il faut inclure un terme d’interaction dans notre modèle.</p>
+<p>En pratique, cela revient à multiplier des variables entre elles.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(pro_russian<span class="sc">~</span>within_25km<span class="sc">*</span>russian_tv, UA_precincts)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pro_russian ~ within_25km * russian_tv, data = UA_precincts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-44.235 -15.401  -5.101  14.048  55.244 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             23.6574     0.3410  69.383  &lt; 2e-16 ***
+within_25km              0.3813     1.4189   0.269    0.788    
+russian_tv              22.0063     1.0503  20.952  &lt; 2e-16 ***
+within_25km:russian_tv -12.1409     1.9603  -6.193 6.56e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 17.8 on 3585 degrees of freedom
+Multiple R-squared:  0.1244,    Adjusted R-squared:  0.1237 
+F-statistic: 169.8 on 3 and 3585 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Quand on inclut un terme d’interaction dans notre modèle entre une variable 1 et une variable 2 on va avoir:</p>
+<ul>
+<li>L’effet direct de la variable 1.</li>
+<li>L’effet direct de la variable 2.</li>
+<li>L’effet d’interaction de la variable 1 et de la variable 2.</li>
+</ul>
+<p>Dans notre cas on a:</p>
+<ul>
+<li>L’effet direct de la variable <code>within_25km</code>.</li>
+<li>L’effet direct de la variable <code>russian_tv</code>.</li>
+<li>L’effet d’interaction de la variable <code>within_25km</code> et de la variable <code>russian_tv</code>.</li>
+</ul>
+<p>Cependant, cet effet est compliqué à interpréter directement car il faut considérer la multiplication des deux variables à la fois, et tenir compte aussi des effets directs.</p>
+<p>Dans notre cas, les deux variables sont binaires (0 ou 1) ; il est donc facile de comprendre que quand les deux variables sont égales à 1, la valeur prédite de la variable dépendante diminue de 12.14. Dans tous les autres cas, la multiplication des variables est égale à 0.</p>
+<p>Cependant, pour faciliter l’interprétation, on peut aussi calculer des valeurs prédites de la variable dépendante sous différents scénarios. Pour ce faire, on peut notamment utiliser la fonction <code>predict()</code>.</p>
+<p>Le plus simple pour ce faire est de:</p>
+<ol type="1">
+<li>Créer des fausses données avec les valeurs des variables dépendantes que l’on veut prédire.</li>
+<li>Utiliser la fonction <code>predict()</code> pour prédire les valeurs de la variable dépendante</li>
+</ol>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Créer des données fictives avec les cas que l'on veut prédire</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">list</span>(<span class="at">within_25km =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">russian_tv=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">fit =</span> <span class="cn">NA</span>, </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">lower =</span> <span class="cn">NA</span>, </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">upper =</span> <span class="cn">NA</span>)) <span class="co"># Cela nous sert pour stocker les prédictions par la suite</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Prédire les valeur de la variable dépendantes selon l'objet model_3</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>new_data[,<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_3, <span class="at">newdata =</span> new_data, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>new_data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  within_25km russian_tv      fit    lower    upper
+1           0          0 23.65737 22.98886 24.32589
+2           0          1 45.66363 43.71584 47.61142
+3           1          0 24.03864 21.33819 26.73909
+4           1          1 33.90397 32.10427 35.70367</code></pre>
+</div>
+</div>
+<p>Voilà, à présent nous avons les valeurs prédites pour les différents cas qui nous intéressent. On peut bien sûr analyser les différents chiffres. Dans ce cas on voit que:</p>
+<ul>
+<li>Le soutien prédit pour le parti pro-russe le plus haut est dans les districts qui reçoivent la télévision russe (russian_tv=1) et qui sont éloignés de la frontière russe (within_25_km=0).</li>
+<li>Le soutien prédit pour le parti pro-russe le plus bas est dans les districts qui ne reçoivent pas la télévision russe (russian_tv=1) et qui sont éloignés de la frontière russe (within_25_km=0).</li>
+</ul>
+<p>Cependant, il est parfois plus pratique de communiquer ces résultats dans un graphique:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> new_data)<span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(within_25km), <span class="at">y =</span> fit, <span class="at">color =</span> <span class="fu">factor</span>(russian_tv)))<span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(within_25km), <span class="at">ymin =</span> lower, <span class="at">ymax=</span>upper, <span class="at">color =</span> <span class="fu">factor</span>(russian_tv)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Session_4_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Et puis, on peut le styliser un peu:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> new_data)<span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(within_25km), <span class="at">y =</span> fit, <span class="at">color =</span> <span class="fu">factor</span>(russian_tv)))<span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(within_25km), <span class="at">ymin =</span> lower, <span class="at">ymax=</span>upper, <span class="at">color =</span> <span class="fu">factor</span>(russian_tv)), <span class="at">width =</span> .<span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Distance de la frontière russe"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Plus de 25 km"</span>, <span class="st">"Moins de 25 km"</span>))<span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">""</span>,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Ne recoit pas la TV russe"</span>, <span class="st">"Recoit la TV russe"</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"grey"</span>))<span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Valeur prédite de soutien au </span><span class="sc">\n</span><span class="st"> parti pro-russe en 2014 </span><span class="sc">\n</span><span class="st"> (en %)"</span>)<span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Session_4_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Grâce à ces analyses, on voit que l’effet de la proximité avec la frontière russe est conditionné à la réception de la télévision russe.</p>
+<p>Pour les districts qui ne reçoivent pas la télévision russe, il n’y a pas de différence. Pour les districts qui reçoivent la télévision russe, on voit que le soutien est plus élevé dans les districts qui sont éloignés de la frontière.</p>
+</section>
+<section id="sec5" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="sec5"><span class="header-section-number">6</span> Les variables catégorielles dans les régressions</h2>
+<p>À présent, nous allons examiner le cas particulier des variables catégorielles.</p>
+<p>Imaginons que nous souhaitons estimer l’effet du taux de personnes ayant une haute éducation sur le soutien au Brexit dans les districts. Cependant, nous souhaitons traiter le taux de personnes avec une haute éducation comme une variable catégorielle dans le modèle, en fonction du quartile dans lequel le district s’inscrit.</p>
+<p>Premièrement, regardons la distribution de cette variable:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(UK_districts<span class="sc">$</span>high_education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  14.21   21.77   25.76   26.92   30.76   68.36       2 </code></pre>
+</div>
+</div>
+<p>En regardant cette distribution, on peut créer notre variable en quatre catégories:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>UK_districts <span class="ot">&lt;-</span> UK_districts <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">case_when</span>(high_education<span class="sc">&lt;</span><span class="fl">21.77</span> <span class="sc">~</span> <span class="st">"1st quartile"</span>, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                               high_education<span class="sc">&gt;=</span><span class="fl">21.77</span> <span class="sc">&amp;</span> high_education<span class="sc">&lt;</span><span class="fl">25.76</span> <span class="sc">~</span> <span class="st">"2nd quartile"</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                               high_education<span class="sc">&gt;=</span><span class="fl">25.76</span> <span class="sc">&amp;</span> high_education<span class="sc">&lt;</span><span class="fl">30.76</span> <span class="sc">~</span> <span class="st">"3rd quartile"</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                               high_education<span class="sc">&gt;=</span><span class="fl">0.76</span> <span class="sc">~</span> <span class="st">"4th quartile"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>À présent, nous allons faire un modèle de régression linéaire avec la variable <code>leave</code> comme variable dépendante et la variable <code>age_group</code> comme variable indépendante.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>model_4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(leave<span class="sc">~</span>age_group, UK_districts)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = leave ~ age_group, data = UK_districts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-30.970  -2.439   1.599   5.109  13.867 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            61.8350     0.7891  78.360  &lt; 2e-16 ***
+age_group2nd quartile  -5.3053     1.1101  -4.779 2.53e-06 ***
+age_group3rd quartile -10.1037     1.1130  -9.078  &lt; 2e-16 ***
+age_group4th quartile -19.3121     1.1130 -17.351  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.651 on 376 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.4647,    Adjusted R-squared:  0.4604 
+F-statistic: 108.8 on 3 and 376 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Alors que l’on a mis une seule variable dans notre formule <code>lm(leave~age_group, UK_districts)</code>, on a trois variables dans le tableau de régression.</p>
+<p>R comprend que notre variable est une variable catégorielle, avec quatre catégories. Il inclut donc l’équivalent de trois variables binaires qui indiquent la distribution des quatre catégories de la manière suivante:</p>
+<ul>
+<li>Si <code>age_groupe2nd quartile</code> est 1 alors <code>age_group3rd quartile</code> et <code>age_group4th quartile</code> sont 0.</li>
+<li>Si <code>age_groupe3rd quartile</code> est 1 alors <code>age_group2nd quartile</code> et <code>age_group4th quartile</code> sont 0.</li>
+<li>Si <code>age_groupe4th quartile</code> est 1 alors <code>age_group2nd quartile</code> et <code>age_group3rd quartile</code> sont 0.</li>
+<li>Si <code>age_groupe2nd quartile</code>, <code>age_group3rd quartile</code> et <code>age_group4th quartile</code> sont 0, alors le groupe est obligatoirement dans le premier quartile de la distribution.</li>
+</ul>
+<p>Pour interpréter les coefficients de régression, il faut toujours se référer à <em>la catégorie de référence</em> (celle qui n’apparaît pas dans le modèle).</p>
+<p>Dans notre cas on voit que:</p>
+<ul>
+<li>Les districts du 2e quartile ont 5,3 % de voix pour le Brexit en moins <em>par rapport aux districts du premier quartile</em>.</li>
+<li>Les districts du 3e quartile ont 10,1 % de voix pour le Brexit en moins <em>par rapport aux districts du premier quartile</em>.</li>
+<li>Les districts du 4e quartile ont 19,3 % de voix pour le Brexit en moins <em>par rapport aux districts du premier quartile</em>.</li>
+</ul>
+<p>Si on change la catégorie de référence, les coefficients de régression sont différents, même si l’effet de la catégorie d’âge est la même:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>UK_districts<span class="sc">$</span>age_group <span class="ot">&lt;-</span> <span class="fu">factor</span>(UK_districts<span class="sc">$</span>age_group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"4th quartile"</span>, <span class="st">"3rd quartile"</span>, <span class="st">"2nd quartile"</span>, <span class="st">"1st quartile"</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>model_5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(leave<span class="sc">~</span>age_group, UK_districts)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = leave ~ age_group, data = UK_districts)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-30.970  -2.439   1.599   5.109  13.867 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            42.5229     0.7849  54.173  &lt; 2e-16 ***
+age_group3rd quartile   9.2083     1.1101   8.295 1.96e-15 ***
+age_group2nd quartile  14.0067     1.1072  12.651  &lt; 2e-16 ***
+age_group1st quartile  19.3121     1.1130  17.351  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.651 on 376 degrees of freedom
+  (2 observations deleted due to missingness)
+Multiple R-squared:  0.4647,    Adjusted R-squared:  0.4604 
+F-statistic: 108.8 on 3 and 376 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Dans ce cas, la catégorie de référence est le quatrième quartile de la distribution ; on interprète donc les résultats par rapport à cette catégorie de référence.</p>
+</section>
+<section id="sec6" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sec6"><span class="header-section-number">7</span> Les régressions logistiques</h2>
+<p>Il existe d’autres types de régressions que les régressions linéaires. Le type de régression que l’on choisit dépend du type de variable dépendante que nous avons, ainsi que de sa distribution.</p>
+<p>Un cas fréquent qui ne correspond pas au cadre du modèle linéaire est la variable binaire.</p>
+<p>Par exemple:</p>
+<ul>
+<li>Voter ou non pour ce parti</li>
+<li>Aller au travail en voiture ou non</li>
+<li>Faire des courses en ligne ou non</li>
+</ul>
+<p>Il existe des tas de phénomènes sociaux binaires que l’on peut souhaiter analyser. Dans ce cas, on va faire une régression logistique. Cela revient à opérer une transformation logit de l’équation de regression selon la formule:</p>
+<p><span class="math display">\[logit(x) = \frac{e^x}{1+e^x}\]</span></p>
+<p>Cette transformation change un nombre continu entre -infini et +infini en un nombre entre 0 et 1. Cela est utilisé dans les régressions logistiques pour indiquer la probabilité que la variable dépendante soit égale à 1.</p>
+<p>Si l’on compare la distribution logit d’une variable à sa prédiction selon un modèle linéaire on a:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>()<span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span><span class="sc">:</span><span class="dv">500</span>)<span class="sc">/</span><span class="dv">100</span>, <span class="at">y =</span> <span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span><span class="sc">:</span><span class="dv">500</span>)<span class="sc">/</span><span class="dv">100</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span><span class="sc">:</span><span class="dv">500</span>)<span class="sc">/</span><span class="dv">100</span>))))<span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span><span class="sc">:</span><span class="dv">500</span>)<span class="sc">/</span><span class="dv">100</span>, <span class="at">y =</span> <span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span><span class="sc">:</span><span class="dv">500</span>)<span class="sc">/</span><span class="dv">100</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">500</span><span class="sc">:</span><span class="dv">500</span>)<span class="sc">/</span><span class="dv">100</span>))), <span class="at">method =</span> <span class="st">"lm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Session_4_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Dans ce cas, les points noirs indiquent la distribution logit de la variable. Si on essaie d’estimer ces valeurs avec un modèle linéaire on voit plusieurs problèmes, notamment que:</p>
+<ul>
+<li>Des valeurs supérieures à 1 sont possibles.</li>
+<li>Des valeurs inférieures à 0 sont possibles.</li>
+</ul>
+<p>En fait, la régression logistique indique l’effet d’un groupe de variables sur la probabilité que la variable dépendante = 1.</p>
+<p>Dans R, pour faire une régression logistique il faut utiliser la fonction <code>glm(y~x, données, family=binomial(link="logit"))</code>.</p>
+<p>La première partie de la fonction (<code>glm(y~x, données)</code>) se note exactement comme pour une régression linéaire.</p>
+<p>La seconde partie indique la transformation (family) avec laquelle on souhaite faire notre régression. Dans notre cas, c’est une transformation binomiale logit, qui s’indique <code>family=binomial(link="logit")</code>.</p>
+<p>Prenons l’exemple du soutien au Brexit dans les données BES. Le soutien au Brexit est codé 1, si l’individu vote pour le Brexit et 0 s’il s’y oppose.</p>
+<p>La regression logistique nous permet d’estimer comment l’âge et le niveau d’éducation affectent la probabilité de voter pour le Brexit:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model_6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(leave<span class="sc">~</span><span class="fu">factor</span>(education)<span class="sc">+</span>age, <span class="at">data =</span> BES, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = leave ~ factor(education) + age, family = binomial(link = "logit"), 
+    data = BES)
+
+Coefficients:
+                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)        -0.5836212  0.0737865  -7.910 2.58e-15 ***
+factor(education)2 -0.1798265  0.0610396  -2.946  0.00322 ** 
+factor(education)3 -0.7273493  0.0607693 -11.969  &lt; 2e-16 ***
+factor(education)4 -1.1887996  0.0576295 -20.628  &lt; 2e-16 ***
+factor(education)5 -1.7895770  0.0711103 -25.166  &lt; 2e-16 ***
+age                 0.0257802  0.0008449  30.513  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 34712  on 25096  degrees of freedom
+Residual deviance: 31665  on 25091  degrees of freedom
+  (5798 observations deleted due to missingness)
+AIC: 31677
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>Le <code>model_6</code> nous indique comment le niveau d’éducation (variable catégorielle) et l’âge des individus (variable continue) influencent la probabilité de voter pour le Brexit.</p>
+<p>Après, les coefficients s’interprètent de la même manière que pour les régressions linéaires. Cependant, pour interpréter la magnitude des effets, il est important d’examiner les probabilités prédites par le modèle avec la fonction <code>predict()</code>.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
