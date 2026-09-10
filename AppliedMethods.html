@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maxime Walder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --fg: #111827;
+      --primary: #2563eb;
+      --secondary: #4b5563;
+      --card-bg: #ffffff;
+    }
+    body.dark {
+      --bg: #111827;
+      --fg: #f9fafb;
+      --primary: #60a5fa;
+      --secondary: #9ca3af;
+      --card-bg: #1f2937;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; } /* ✅ Smooth scrolling */
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--card-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--fg);
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--secondary); }
+
+    .toggle-btn {
+      margin-left: 2rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .toggle-btn:hover { background: #1d4ed8; }
+
+    section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    section h3 {
+      margin: 1rem 0;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+
+    section p {
+      margin: 1rem 0;
+      font-size: 1rem;
+      font-weight: 200;
+      color: var(--secondary);
+    }
+
+    /* ✅ Hero section with parallax */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      background-image: url('FIOU8471_websize copy.png'); /* you can replace with a banner image */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* creates parallax effect */
+      color: var(--fg);
+    }
+    .hero-overlay {
+      background: rgba(255,255,255,0.2); /* light overlay for readability */
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 700px;
+    }
+    body.dark .hero-overlay {
+      background: rgba(0,0,0,0.6);
+    }
+    .hero h1 { margin-bottom: 1rem; }
+    .hero p { max-width: 600px; color: var(--fg); }
+
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .contact-icons img {
+      width: 50px;
+      transition: transform 0.2s;
+    }
+    .contact-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-top: 1px solid #e5e7eb;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dr. Maxime Walder</h1>
+    <nav>
+      <a href="#Publications">Publications</a>
+      <a href="#Research">Research</a>
+      <a href="#Teaching">Teaching</a>
+      <a href="#Programming">Programming</a>
+      <a href="#Contact">Contact</a>
+      <a href="/listpublication.pdf">Publication list</a>
+      <a href="/cv.pdf">CV</a>
+      <button class="toggle-btn" id="toggle-theme">🌙</button>
+    </nav>
+  </header>
+
+  <section id="Publications">
+    <h1>Applied Methods</h1>
+
+<p>The class _Applied Methods_ aims to introduce students to the use of data and statistics to answers substantial questions and provide student with a strong and practical background in the analysis and visualisation of data with R. In addition to the classical statistical approach, the class is designed to provide an fundamental transferable skill to the use of data for data-driven report and in-depth analyses with quantitative data.<\p> 
+
+<p>The course first covers the basics of R and RStudio, on statistics and data manipulation.<\p> 
+
+<p>Second, the course dives into the data vizualisation and the production of high quality and resolution figures. <\p>
+
+<p>Third, the class then turns on more complexe analyses with sessions on regression models, interaction terms, and their associated visualization. <\p>
+
+<p>Fourth, the class then provide key technical skkils on how to use R to create data driven reports, and create interactive data leaderbord. <\p>
+
+<p>Finally, the course ends with a introduction to quantitative text analyses, text data pre-processing, text statistics and the visualization of text data. <\p>
+
+<p>Overall, this course is designed to provide a strong practical guide to use quantitative data and produce data-driven transferable knowledge.<\p>
+
+<p>For more information, you can download the full syllabus <a href="/syllabus.html" download  class="btn btn-sm btn-primary"> here. <\a>
+
+<p>Here is a table with the summary for each session:</p>
+
+  <table>
+  <thead>
+    <tr>
+      <th style="text-align: left;">Session</th>
+      <th style="text-align: left;">Date</th>
+      <th style="text-align: left;">Title</th>
+      <th style="text-align: center;">Material</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>September 18</td>
+      <td>Introduction to R and RStudio</td>
+      <td style="text-align: center;">
+        <a href="session_01.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td>September 25</td>
+      <td>Data manipulation and descriptive statistics</td>
+      <td style="text-align: center;">
+        <a href="session_02.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td>October 2</td>
+      <td>Data visualization</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_03.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>-</td>
+      <td>October 9</td>
+      <td><em>Dies Academic</em></td>
+      <td style="text-align: center;">—</td>
+    </tr>
+
+    <tr>
+      <td>4</td>
+      <td>October 16</td>
+      <td><strong>Assignment 1</strong><br>Writing report with Quarto</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_04.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>5</td>
+      <td>October 23</td>
+      <td>Hypothesis testing and introduction to regressions</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_05.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>6</td>
+      <td>October 30</td>
+      <td>Interpret interaction terms in statistical models</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_06.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>-</td>
+      <td>November 6</td>
+      <td><em>Reading week</em></td>
+      <td style="text-align: center;">—</td>
+    </tr>
+
+    <tr>
+      <td>7</td>
+      <td>November 13</td>
+      <td><strong>Assignment 2</strong><br>Free code session on projects</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_07.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>8</td>
+      <td>November 20</td>
+      <td>Introduction to text as data</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_08.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>9</td>
+      <td>November 27</td>
+      <td>Introduction to ShinyR: Building shiny applications</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_09.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>10</td>
+      <td>December 4</td>
+      <td><strong>Assignment 3</strong><br>Introduction to Webscrapping</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_10.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>11</td>
+      <td>December 11</td>
+      <td><strong>Group project presentations 2</strong><br>Using Application Private Interfaces (API)</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_11.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td>12</td>
+      <td>December 18</td>
+      <td><strong>Group project presentations 3</strong><br>Class synthesis</td>
+      <td style="text-align: center;">
+        <a href="downloads/session_12.zip" class="btn btn-sm btn-primary">
+          Download
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+  <section id="Contact">
+    <h1>Contact</h1>
+    <div class="contact-icons">
+      <a href="https://github.com/maxwaldo"><img src="githubicon.png" alt="Github"></a>
+      <a href="mailto:maxime.walder@unige.ch"><img src="mailicon.png" alt="Email"></a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Maxime Walder. Built with ❤️ and clean code.</p>
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    const btn = document.getElementById('toggle-theme');
+    btn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      btn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    });
+
+    // Reveal sections on scroll
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
