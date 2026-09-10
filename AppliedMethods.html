@@ -148,6 +148,39 @@
       color: var(--secondary);
       font-size: 0.9rem;
     }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+    
+      background: var(--primary);
+      color: white;
+    
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+    
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+    }
+    
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+      background: #1d4ed8;
+    }
+    
+    .download-btn:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -182,7 +215,9 @@
 
 <p>Overall, this course is designed to provide a strong practical guide to use quantitative data and produce data-driven transferable knowledge.</p>
 
-<p>For more information, you can download the full syllabus <a href="/syllabus.html" download  class="btn btn-sm btn-primary"> here. </a></p>
+<p>For more information, you can download the full syllabus here: <a href="/syllabus.html" download class="download-btn" download>
+          ↓ Download
+        </a></p>
 
 <p>Here is a table with the summary for each session:</p>
 
@@ -202,8 +237,8 @@
       <td>September 18</td>
       <td>Introduction to R and RStudio</td>
       <td style="text-align: center;">
-        <a href="session_01.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="session_01.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -213,8 +248,8 @@
       <td>September 25</td>
       <td>Data manipulation and descriptive statistics</td>
       <td style="text-align: center;">
-        <a href="session_02.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="session_02.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -224,8 +259,8 @@
       <td>October 2</td>
       <td>Data visualization</td>
       <td style="text-align: center;">
-        <a href="downloads/session_03.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_03.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -242,8 +277,8 @@
       <td>October 16</td>
       <td><strong>Assignment 1</strong><br>Writing report with Quarto</td>
       <td style="text-align: center;">
-        <a href="downloads/session_04.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_04.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -253,8 +288,8 @@
       <td>October 23</td>
       <td>Hypothesis testing and introduction to regressions</td>
       <td style="text-align: center;">
-        <a href="downloads/session_05.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_05.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -264,8 +299,8 @@
       <td>October 30</td>
       <td>Interpret interaction terms in statistical models</td>
       <td style="text-align: center;">
-        <a href="downloads/session_06.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_06.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -282,8 +317,8 @@
       <td>November 13</td>
       <td><strong>Assignment 2</strong><br>Free code session on projects</td>
       <td style="text-align: center;">
-        <a href="downloads/session_07.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_07.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -293,8 +328,8 @@
       <td>November 20</td>
       <td>Introduction to text as data</td>
       <td style="text-align: center;">
-        <a href="downloads/session_08.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_08.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -304,8 +339,8 @@
       <td>November 27</td>
       <td>Introduction to ShinyR: Building shiny applications</td>
       <td style="text-align: center;">
-        <a href="downloads/session_09.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_09.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -315,8 +350,8 @@
       <td>December 4</td>
       <td><strong>Assignment 3</strong><br>Introduction to Webscrapping</td>
       <td style="text-align: center;">
-        <a href="downloads/session_10.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_10.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -326,8 +361,8 @@
       <td>December 11</td>
       <td><strong>Group project presentations 2</strong><br>Using Application Private Interfaces (API)</td>
       <td style="text-align: center;">
-        <a href="downloads/session_11.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_11.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
@@ -337,8 +372,8 @@
       <td>December 18</td>
       <td><strong>Group project presentations 3</strong><br>Class synthesis</td>
       <td style="text-align: center;">
-        <a href="downloads/session_12.zip" class="btn btn-sm btn-primary">
-          Download
+        <a href="downloads/session_12.zip" class="download-btn" download>
+          ↓ Download
         </a>
       </td>
     </tr>
